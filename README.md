@@ -9,9 +9,9 @@ This is timely, as human activities threaten biodiversity on a global scale, whi
 
 To effectively manage the health of at-risk species and allocate funding, it is important for us to have a robust understanding of species' current and historical population trends (for example, recent declines in a species with a history of large population swings would likely be less concerncing than a continuous decline in a species that historically had a large population). See example plots below
 
-![Short-term decline](decline1.png "Short-term decline")
+![Short-term decline](decline1.png "Short-term decline"=150x150)
 
-![Historial context](decline2.png "Historical context")
+![Historial context](decline2.png "Historical context"=300x150)
 
 ### Primary functionality
 
@@ -19,12 +19,12 @@ NEvolve is a neural net project that aims to classify and elucidate species' dem
 
 We are particularly interested in assessing the history and current prospects of seabirds (see two example images below, black-legged kittiwake and Leach's storm-petrel). However, we hope to make our method generalizable to any species.
 
-![Black-legged kittiwake](kittiwake.jpg "Short-term decline")
+![Black-legged kittiwake](kittiwake.jpg "Short-term decline"=100x100)
 
-![Leach's storm-petrel](stormpetrel.PNG "Leach's storm-petrel")
+![Leach's storm-petrel](stormpetrel.PNG "Leach's storm-petrel"=100x100)
 
 ### Conceptual flow chart
-![Flow chart](concept.PNG "Flow chart")
+![Flow chart](concept.PNG "Flow chart"=400x250)
 
 ### Current progress
 

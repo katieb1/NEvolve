@@ -11,10 +11,10 @@ To effectively manage the health of at-risk species and allocate funding, it is 
 <table>
    <tr>
       <td>
-<img src="decline1.png" alt="Short-term decline" width="300" height="300">
+<img src="decline1.png" alt="Short-term decline" width="300">
       </td>
       <td>
-<img src="decline2.png" alt="Historical context" width="600" height="300">
+<img src="decline2.png" alt="Historical context" width="700">
       </td>
    </tr>
 </table>
@@ -26,16 +26,16 @@ We are particularly interested in assessing the history and current prospects of
 <table>
    <tr>
       <td>
-<img src="kittiwake.jpg" alt="kittiwake" width="200" height="300">
+<img src="kittiwake.jpg" alt="kittiwake" width="200">
       </td>
       <td>
-<img src="stormpetrel.PNG " alt="storm-petrel" width="200" height="200">
+<img src="stormpetrel.PNG " alt="storm-petrel" width="200">
       </td>
    </tr>
 </table>
 
 ### Conceptual flow chart
-<img src="concept.PNG" alt="flow-chart" width="800" height="500">
+<img src="concept.PNG" alt="flow-chart" width="900">
 
 ### Current progress
 

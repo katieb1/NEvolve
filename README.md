@@ -11,13 +11,14 @@ To effectively manage the health of at-risk species and allocate funding, it is 
 <table>
    <tr>
       <td>
-<img src="decline1.png" alt="Short-term decline" width="300">
+<img src="figures/decline1.png" alt="Short-term decline" width="300">
       </td>
       <td>
-<img src="decline2.png" alt="Historical context" width="700">
+<img src="figures/decline2.png" alt="Historical context" width="700">
       </td>
    </tr>
 </table>
+
 ### Primary functionality
 
 NEvolve is a neural net project that aims to classify and elucidate species' demographic histories using solely genomic data. Our code generates simulated genomic data derived from potential demographic scenarios, uses supervised learning to train a convolutional neural network, and then attempts to classify real-world seabird genomic data.
@@ -26,16 +27,16 @@ We are particularly interested in assessing the history and current prospects of
 <table>
    <tr>
       <td>
-<img src="kittiwake.jpg" alt="kittiwake" width="200">
+<img src="figures/kittiwake.jpg" alt="kittiwake" width="200">
       </td>
       <td>
-<img src="stormpetrel.PNG " alt="storm-petrel" width="200">
+<img src="figures/stormpetrel.PNG " alt="storm-petrel" width="200">
       </td>
    </tr>
 </table>
 
 ### Conceptual flow chart
-<img src="concept.PNG" alt="flow-chart" width="900">
+<img src="figures/concept.PNG" alt="flow-chart" width="900">
 
 ### Current progress
 

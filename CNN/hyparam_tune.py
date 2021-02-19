@@ -53,79 +53,79 @@ train = torch.utils.data.TensorDataset(sim_tensor, param)
 
 # Standard network
 class Net(nn.Module):
-  def __init__(self):
-    super().__init__()
-    self.conv1 = nn.Conv2d(1, 6, 5)
-    self.pool = nn.MaxPool2d(4, 4)
-    self.conv2 = nn.Conv2d(6, 16, 5)
+    def __init__(self):
+        super().__init__()
+        self.conv1 = nn.Conv2d(1, 6, 5)
+        self.pool = nn.MaxPool2d(4, 4)
+        self.conv2 = nn.Conv2d(6, 16, 5)
 
-    self.fc1 = nn.Linear(16 * 3 * 77, 120)
-    self.fc2 = nn.Linear(120, 84)
-    self.fc3 = nn.Linear(84, 5)
+        self.fc1 = nn.Linear(16 * 3 * 77, 120)
+        self.fc2 = nn.Linear(120, 84)
+        self.fc3 = nn.Linear(84, 5)
 
     # Define all the steps for one full forward pass
-  def forward(self, x):
-    x = self.pool(F.relu(self.conv1(x)))
-    x = self.pool(F.relu(self.conv2(x)))
+    def forward(self, x):
+        x = self.pool(F.relu(self.conv1(x)))
+        x = self.pool(F.relu(self.conv2(x)))
 
-    x = x.view(-1, 16 * 3 * 77)
+        x = x.view(-1, 16 * 3 * 77)
 
-    x = F.relu(self.fc1(x))
-    x = F.relu(self.fc2(x))
-    x = self.fc3(x)
-    return x
+        x = F.relu(self.fc1(x))
+        x = F.relu(self.fc2(x))
+        x = self.fc3(x)
+        return x
 
 # Network with some batch normalization
 class NetSomeBatch(nn.Module):
-  def __init__(self):
-    super().__init__()
-    self.conv1 = nn.Conv2d(1, 6, 5)
-    self.batch1 = nn.BatchNorm2d(6)
-    self.pool = nn.MaxPool2d(4, 4)
-    self.conv2 = nn.Conv2d(6, 16, 5)
+    def __init__(self):
+        super().__init__()
+        self.conv1 = nn.Conv2d(1, 6, 5)
+        self.batch1 = nn.BatchNorm2d(6)
+        self.pool = nn.MaxPool2d(4, 4)
+        self.conv2 = nn.Conv2d(6, 16, 5)
 
-    self.fc1 = nn.Linear(16 * 3 * 77, 120)
-    self.batch2 = nn.BatchNorm1d(120)
-    self.fc2 = nn.Linear(120, 84)
-    self.fc3 = nn.Linear(84, 5)
+        self.fc1 = nn.Linear(16 * 3 * 77, 120)
+        self.batch2 = nn.BatchNorm1d(120)
+        self.fc2 = nn.Linear(120, 84)
+        self.fc3 = nn.Linear(84, 5)
 
-  def forward(self, x):
-    x = self.batch1(self.pool(F.relu(self.conv1(x))))
-    x = self.pool(F.relu(self.conv2(x)))
-    
-    x = x.view(-1, 16 * 3 * 77)
-    
-    x = self.batch2(F.relu(self.fc1(x)))
-    x = F.relu(self.fc2(x))
-    x = self.fc3(x)
-    return x
+    def forward(self, x):
+        x = self.batch1(self.pool(F.relu(self.conv1(x))))
+        x = self.pool(F.relu(self.conv2(x)))
+
+        x = x.view(-1, 16 * 3 * 77)
+
+        x = self.batch2(F.relu(self.fc1(x)))
+        x = F.relu(self.fc2(x))
+        x = self.fc3(x)
+        return x
 
 # Network with all the batch norm
 class NetBatch(nn.Module):
-  def __init__(self):
-    super().__init__()
-    self.conv1 = nn.Conv2d(1, 6, 5)
-    self.batch1 = nn.BatchNorm2d(6)
-    self.pool = nn.MaxPool2d(4, 4)
-    self.conv2 = nn.Conv2d(6, 16, 5)
-    self.batch2 = nn.BatchNorm2d(16)
+    def __init__(self):
+        super().__init__()
+        self.conv1 = nn.Conv2d(1, 6, 5)
+        self.batch1 = nn.BatchNorm2d(6)
+        self.pool = nn.MaxPool2d(4, 4)
+        self.conv2 = nn.Conv2d(6, 16, 5)
+        self.batch2 = nn.BatchNorm2d(16)
 
-    self.fc1 = nn.Linear(16 * 3 * 77, 120)
-    self.batch3 = nn.BatchNorm1d(120)
-    self.fc2 = nn.Linear(120, 84)
-    self.batch4 = nn.BatchNorm1d(84)
-    self.fc3 = nn.Linear(84, 5)
+        self.fc1 = nn.Linear(16 * 3 * 77, 120)
+        self.batch3 = nn.BatchNorm1d(120)
+        self.fc2 = nn.Linear(120, 84)
+        self.batch4 = nn.BatchNorm1d(84)
+        self.fc3 = nn.Linear(84, 5)
 
-  def forward(self, x):
-    x = self.batch1(self.pool(F.relu(self.conv1(x))))
-    x = self.batch2(self.pool(F.relu(self.conv2(x))))
+    def forward(self, x):
+        x = self.batch1(self.pool(F.relu(self.conv1(x))))
+        x = self.batch2(self.pool(F.relu(self.conv2(x))))
 
-    x = x.view(-1, 16 * 3 * 77)
+        x = x.view(-1, 16 * 3 * 77)
 
-    x = self.batch3(F.relu(self.fc1(x)))
-    x = self.batch4(F.relu(self.fc2(x)))
-    x = self.fc3(x)
-    return x
+        x = self.batch3(F.relu(self.fc1(x)))
+        x = self.batch4(F.relu(self.fc2(x)))
+        x = self.fc3(x)
+        return x
 
 # Set all networks
 network1 = Net()

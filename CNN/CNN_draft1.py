@@ -12,7 +12,7 @@ tic = time.perf_counter()
 
 ### data loader will need to be modified!! ###
 # Currently using toy data set
-with np.load('/home/sliced_data.npz') as data:
+with np.load('./toy_dat/sliced_data.npz') as data:
     param = data['param']
     raw_sim = data['sim']
     pos = data['pos']
@@ -124,4 +124,4 @@ toc = time.perf_counter()
 print(f"Total time run: {(toc-tic)/60:0.4f} minutes")
 
 ### Where we save to needs to be modified!! ###
-torch.save(net.state_dict(), "/home/test.pth")
+torch.save(net.state_dict(), "./test.pth")

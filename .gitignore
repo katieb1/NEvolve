@@ -1,2 +1,4 @@
 */ms_output/
 */outputs/
+*.DS_Store
+*/__pycache__/

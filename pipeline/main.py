@@ -7,7 +7,7 @@ example_set = msms.Dataset("data", "metadata/lookup.npy")
 
 # Initialize a dataloader with the dataset
 # - Note that you currently can't add more `num_workers`, maybe due to fighting over GPU resources?
-example_loader = torch.utils.data.DataLoader(example_set, batch_size = 2, shuffle = True)
+example_loader = torch.utils.data.DataLoader(example_set, batch_size = 2, shuffle = True, num_workers = 0)
 
 # This is just a sanity check to make sure `reshape()` can be used to combine chunks (each file) into minibatch sizes of our choice
 # Note that we cannot randomize within chunks (msms output files) at the moment, so we should make balanced files

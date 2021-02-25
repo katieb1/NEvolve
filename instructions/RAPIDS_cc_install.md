@@ -19,7 +19,7 @@ module load singularity
 
 ```
 cd ~/scratch
-salloc --mem-per-cpu=2000 --cpus-per-task=4 --time=1:0:0
+salloc --mem-per-cpu=2000 --cpus-per-task=4 --time=8:0:0
 ```
 
 3. Pull a Docker image using the Singularity syntax
@@ -32,10 +32,10 @@ salloc --mem-per-cpu=2000 --cpus-per-task=4 --time=1:0:0
 
 ```
 # Pull base image
-SINGULARITY_TMPDIR=~/scratch/singularity/tmp SINGULARITY_CACHEDIR=~/scratch/singularity/cache singularity build rapids_b.sif docker:nvcr.io/nvidia/rapidsai/rapidsai:cuda10.1-base-centos7
+SINGULARITY_TMPDIR=~/scratch/singularity/tmp SINGULARITY_CACHEDIR=~/scratch/singularity/cache singularity build rapids_b.sif docker://rapidsai/rapidsai-core:cuda11.0-base-centos7-py3.8
 
 # or pull runtime image
-SINGULARITY_TMPDIR=~/scratch/singularity/tmp SINGULARITY_CACHEDIR=~/scratch/singularity/cache singularity build rapids_rt.sif docker://nvcr.io/nvidia/rapidsai/rapidsai:cuda11.0-runtime-centos7
+SINGULARITY_TMPDIR=~/scratch/singularity/tmp SINGULARITY_CACHEDIR=~/scratch/singularity/cache singularity build rapids_rt.sif docker://rapidsai/rapidsai-core:cuda11.0-runtime-centos7-py3.8
 ```
 
 This will take ~30 min to install.

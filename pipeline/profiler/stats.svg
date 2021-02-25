@@ -1,0 +1,1028 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" width="1200" height="840"
+     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<style type="text/css">
+    .func_g:hover { stroke:black; stroke-width:0.5; cursor:pointer; }
+</style>
+<svg class="func_g" x="0.0" y="384" width="1199.0001906717941" height="23"><g>
+    <title>msms_profiler.py:71:main 100.00% (1 1 0.0029219999999999997 69.228918)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 140, 79)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">main</text>
+</g></svg>
+<svg class="func_g" x="0.002374730544279716" y="360" width="4.696337225142087" height="23"><g>
+    <title>dataloader.py:339:__iter__ 0.47% (1 1 3e-06 0.328626)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 190, 110)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__iter__</text>
+</g></svg>
+<svg class="func_g" x="0.002374730544279716" y="336" width="4.696285223743308" height="23"><g>
+    <title>dataloader.py:290:_get_iterator 0.47% (1 1 4.9999999999999996e-06 0.328623)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 240, 141)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">_get_iterator</text>
+</g></svg>
+<svg class="func_g" x="0.002374730544279716" y="312" width="4.696198554745341" height="23"><g>
+    <title>dataloader.py:465:__init__ 0.47% (1 1 1.4e-05 0.32861799999999997)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 90, 49)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__init__</text>
+</g></svg>
+<svg class="func_g" x="0.0027560741353319334" y="288" width="4.695574537959983" height="23"><g>
+    <title>dataloader.py:401:__init__ 0.47% (1 1 7.999999999999999e-05 0.328582)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 140, 79)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__init__</text>
+</g></svg>
+<svg class="func_g" x="0.002842743133298346" y="264" width="1" height="23"><g>
+    <title>~:0:&lt;built-in method empty&gt; 0.15% (1 1 0.10617499999999999 0.10617499999999999)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 115, 64)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">&lt;built-in method empty&gt;</text>
+</g></svg>
+<svg class="func_g" x="1.8432589149500782" y="264" width="1" height="23"><g>
+    <title>~:0:&lt;method 'item' of 'torch._C._TensorBase' objects&gt; 0.14% (1 1 0.09512899999999999 0.09512899999999999)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 240, 141)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">&lt;method 'item' of 'torch._C._TensorBase' objects&gt;</text>
+</g></svg>
+<svg class="func_g" x="3.4922059364594586" y="264" width="1.2047379716683935" height="23"><g>
+    <title>~:0:&lt;method 'random_' of 'torch._C._TensorBase' objects&gt; 0.18% (1 1 0.127193 0.127193)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 165, 95)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">&lt;method 'random_' of 'torch._C._TensorBase' objects&gt;</text>
+</g></svg>
+<svg class="func_g" x="5.698711955686367" y="360" width="1185.669476090384" height="23"><g>
+    <title>dataloader.py:432:__next__ 98.89% (2 2 9.999999999999999e-06 68.459859)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 140, 79)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__next__</text>
+</g></svg>
+<svg class="func_g" x="5.698711955686367" y="336" width="1185.6693027523881" height="23"><g>
+    <title>dataloader.py:473:_next_data 98.89% (2 2 0.000435 68.45984899999999)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 140, 79)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">_next_data</text>
+</g></svg>
+<svg class="func_g" x="6.399413470445222" y="312" width="1184.961061034806" height="23"><g>
+    <title>fetch.py:42:fetch 98.83% (1 1 1.1e-05 68.41899)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 140, 79)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">fetch</text>
+</g></svg>
+<svg class="func_g" x="6.399413470445222" y="288" width="1" height="23"><g>
+    <title>collate.py:42:default_collate 0.16% (1 1 2.1e-05 0.11115)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 90, 49)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">default_collate</text>
+</g></svg>
+<svg class="func_g" x="8.326065295238584" y="288" width="1183.0342185382174" height="23"><g>
+    <title>fetch.py:44:&lt;listcomp&gt; 98.67% (1 1 1.2e-05 68.307829)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 115, 64)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">&lt;listcomp&gt;</text>
+</g></svg>
+<svg class="func_g" x="8.326065295238584" y="264" width="1183.0340105326222" height="23"><g>
+    <title>msms_profiler.py:37:__getitem__ 98.67% (2 2 0.039501 68.307817)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 165, 95)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__getitem__</text>
+</g></svg>
+<svg class="func_g" x="8.326065295238584" y="240" width="1180.5869113750405" height="23"><g>
+    <title>msms_profiler.py:45:read_file 98.47% (2 2 0.034464999999999996 68.166642)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 215, 125)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">read_file</text>
+</g></svg>
+<svg class="func_g" x="8.32630796843289" y="216" width="1154.475518340914" height="23"><g>
+    <title>contextlib.py:71:inner 96.29% (8 8 8.8e-05 66.660256)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 165, 95)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">inner</text>
+</g></svg>
+<svg class="func_g" x="8.326789563518787" y="192" width="1137.746080054942" height="23"><g>
+    <title>csv.py:13:read_csv 94.90% (2 2 7.640485740525898e-05 65.69512206061518)</title>
+    <rect height="100%" width="100%" fill="rgb(57, 242, 168)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">read_csv</text>
+</g></svg>
+<svg class="func_g" x="8.521680774886509" y="168" width="7.657634859166077" height="23"><g>
+    <title>ioutils.py:1090:get_filepath_or_buffer 0.72% (2 2 4.56444602680768e-05 0.4994654987543058)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 165, 95)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">get_filepath_or_buffer</text>
+</g></svg>
+<svg class="func_g" x="8.526823522410906" y="144" width="7.65111612568197" height="23"><g>
+    <title>genericpath.py:16:exists 0.72% (2 2 1.6868604881680553e-05 0.4990894280925317)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 215, 125)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">exists</text>
+</g></svg>
+<svg class="func_g" x="8.526823522410906" y="120" width="7.650823728665532" height="23"><g>
+    <title>~:0:&lt;built-in method posix.stat&gt; 0.72% (2 2 0.49907255948765 0.49907255948765)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 90, 49)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">&lt;built-in method posix.stat&gt;</text>
+</g></svg>
+<svg class="func_g" x="17.179315634052585" y="168" width="1128.892229597922" height="23"><g>
+    <title>~:0:&lt;cudf._lib.csv.read_csv&gt; 94.16% (2 2 64.92510299270535 65.18433673571438)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 165, 95)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">&lt;cudf._lib.csv.read_csv&gt;</text>
+</g></svg>
+<svg class="func_g" x="17.179315634052585" y="144" width="1.2734212024490912" height="23"><g>
+    <title>buffer.py:15:__init__ 0.19% (5043 5043 0.007600794905509984 0.1311553874968137)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 240, 141)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__init__</text>
+</g></svg>
+<svg class="func_g" x="17.179315634052585" y="120" width="1" height="23"><g>
+    <title>buffer.py:83:_init_from_array_like 0.11% (7209 7209 0.019801544090965652 0.0746655569634256)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 240, 141)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">_init_from_array_like</text>
+</g></svg>
+<svg class="func_g" x="19.452736836501675" y="144" width="1" height="23"><g>
+    <title>column.py:1401:build_column 0.16% (2534 2534 0.011939003172727954 0.10839963951142724)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 115, 64)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">build_column</text>
+</g></svg>
+<svg class="func_g" x="1147.4848742144457" y="192" width="7.505932407108595" height="23"><g>
+    <title>dataframe.py:616:__getitem__ 0.71% (16 16 0.029576617982838373 0.4907136696333397)</title>
+    <rect height="100%" width="100%" fill="rgb(85, 218, 84)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__getitem__</text>
+</g></svg>
+<svg class="func_g" x="1147.6472405576908" y="168" width="6.164896490780071" height="23"><g>
+    <title>frame.py:1482:_apply_boolean_mask 0.60% (2 2 3.7706293264933e-05 0.41334829402070034)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 215, 125)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">_apply_boolean_mask</text>
+</g></svg>
+<svg class="func_g" x="1147.9652997122766" y="144" width="5.846183742863395" height="23"><g>
+    <title>~:0:&lt;cudf._lib.stream_compaction.apply_boolean_mask&gt; 0.57% (2 2 0.29608668332113564 0.39496151469966856)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 240, 141)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">&lt;cudf._lib.stream_compaction.apply_boolean_mask&gt;</text>
+</g></svg>
+<svg class="func_g" x="1156.4188414539697" y="192" width="1.9019027895444238" height="23"><g>
+    <title>dataframe.py:3973:merge 0.24% (4 4 5.1598085520434636e-05 0.16741296528367638)</title>
+    <rect height="100%" width="100%" fill="rgb(99, 206, 42)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">merge</text>
+</g></svg>
+<svg class="func_g" x="1156.4556490783916" y="168" width="1.8642007742485052" height="23"><g>
+    <title>frame.py:3173:_merge 0.24% (4 4 5.457489814661356e-05 0.16523790752481496)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 165, 95)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">_merge</text>
+</g></svg>
+<svg class="func_g" x="1156.8386203706266" y="144" width="1.480283491666305" height="23"><g>
+    <title>join.py:101:perform_merge 0.21% (4 4 0.002611656944034307 0.14308942931516838)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 165, 95)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">perform_merge</text>
+</g></svg>
+<svg class="func_g" x="1157.5854367502566" y="120" width="1" height="23"><g>
+    <title>~:0:&lt;built-in method cudf._lib.join.join&gt; 0.14% (4 4 0.09545348140017788 0.09726437574777005)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 90, 49)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">&lt;built-in method cudf._lib.join.join&gt;</text>
+</g></svg>
+<svg class="func_g" x="1159.4473177519824" y="192" width="3.3288862288810224" height="23"><g>
+    <title>indexing.py:387:_getitem_tuple_arg 0.36% (2 2 4.7629002018862746e-05 0.2497367184606544)</title>
+    <rect height="100%" width="100%" fill="rgb(44, 255, 210)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">_getitem_tuple_arg</text>
+</g></svg>
+<svg class="func_g" x="1159.474441875213" y="168" width="2.6316741430984827" height="23"><g>
+    <title>frame.py:507:_gather 0.30% (2 2 2.480677188482434e-05 0.20951402625572482)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 90, 49)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">_gather</text>
+</g></svg>
+<svg class="func_g" x="1159.677451869041" y="144" width="2.4282341536579315" height="23"><g>
+    <title>~:0:&lt;cudf._lib.copying.gather&gt; 0.29% (8 8 0.13444417153880486 0.19777741949817407)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 165, 95)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">&lt;cudf._lib.copying.gather&gt;</text>
+</g></svg>
+<svg class="func_g" x="1163.801826309347" y="216" width="1.6810881182913926" height="23"><g>
+    <title>dataframe.py:1034:astype 0.22% (2 2 0.007618 0.154674)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 240, 141)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">astype</text>
+</g></svg>
+<svg class="func_g" x="1163.801826309347" y="192" width="1" height="23"><g>
+    <title>column.py:994:astype 0.15% (2526 2526 0.00989 0.10557)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 165, 95)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">astype</text>
+</g></svg>
+<svg class="func_g" x="1168.3250639794146" y="216" width="3.3804071614188516" height="23"><g>
+    <title>indexing.py:166:__getitem__ 0.37% (2 2 3.2999999999999996e-05 0.25270899999999996)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 240, 141)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__getitem__</text>
+</g></svg>
+<svg class="func_g" x="1168.3252026498112" y="192" width="3.379436468641628" height="23"><g>
+    <title>contextlib.py:71:inner 0.36% (4 4 0.00011999999999999999 0.25265299999999996)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 165, 95)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">inner</text>
+</g></svg>
+<svg class="func_g" x="1168.325204474269" y="168" width="3.3139849847740352" height="23"><g>
+    <title>csv.py:13:read_csv 0.36% (0 0 2.8944943335759767e-07 0.2488770544252653)</title>
+    <rect height="100%" width="100%" fill="rgb(57, 242, 168)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">read_csv</text>
+</g></svg>
+<svg class="func_g" x="1168.3587410679088" y="144" width="3.2804433738758654" height="23"><g>
+    <title>~:0:&lt;cudf._lib.csv.read_csv&gt; 0.36% (0 0 0.2459599416859684 0.24694201354068232)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 165, 95)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">&lt;cudf._lib.csv.read_csv&gt;</text>
+</g></svg>
+<svg class="func_g" x="1173.4243904789646" y="216" width="1.2322120440237465" height="23"><g>
+    <title>series.py:2179:astype 0.19% (4 4 4.2e-05 0.128778)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 165, 95)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">astype</text>
+</g></svg>
+<svg class="func_g" x="1173.4243904789646" y="192" width="1.2262145493644705" height="23"><g>
+    <title>column.py:994:astype 0.19% (4 4 3.7e-05 0.128432)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 165, 95)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">astype</text>
+</g></svg>
+<svg class="func_g" x="1175.6566025229884" y="216" width="9.249163691115323" height="23"><g>
+    <title>series.py:3652:isin 0.85% (2 2 0.000127 0.591282)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 90, 49)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">isin</text>
+</g></svg>
+<svg class="func_g" x="1175.6566025229884" y="192" width="9.241727491089804" height="23"><g>
+    <title>column.py:844:isin 0.85% (2 2 0.002029 0.590853)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 90, 49)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">isin</text>
+</g></svg>
+<svg class="func_g" x="1175.6566025229884" y="168" width="1" height="23"><g>
+    <title>column.py:1537:as_column 0.15% (2 2 0.0025989999999999997 0.10471599999999999)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 165, 95)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">as_column</text>
+</g></svg>
+<svg class="func_g" x="1177.4717286811986" y="168" width="1" height="23"><g>
+    <title>column.py:2025:arange 0.12% (2 2 0.058720999999999995 0.081567)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 190, 110)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">arange</text>
+</g></svg>
+<svg class="func_g" x="1179.1789172693411" y="168" width="1.8231906073571231" height="23"><g>
+    <title>contextlib.py:71:inner 0.24% (6 6 0.00018899999999999999 0.162872)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 165, 95)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">inner</text>
+</g></svg>
+<svg class="func_g" x="1179.178918444666" y="144" width="1.7790903338494157" height="23"><g>
+    <title>csv.py:13:read_csv 0.23% (0 0 1.8646474784251588e-07 0.1603278218888836)</title>
+    <rect height="100%" width="100%" fill="rgb(57, 242, 168)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">read_csv</text>
+</g></svg>
+<svg class="func_g" x="1179.2005228831474" y="120" width="1.7574826632251925" height="23"><g>
+    <title>~:0:&lt;cudf._lib.csv.read_csv&gt; 0.23% (0 0 0.15844860352230564 0.15908125903877446)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 165, 95)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">&lt;cudf._lib.csv.read_csv&gt;</text>
+</g></svg>
+<svg class="func_g" x="1182.463949633062" y="168" width="1.9980193100549717" height="23"><g>
+    <title>dataframe.py:3669:sort_values 0.25% (2 2 9.8e-05 0.172958)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 115, 64)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">sort_values</text>
+</g></svg>
+<svg class="func_g" x="1182.661889639632" y="144" width="1.7983805911242547" height="23"><g>
+    <title>series.py:2240:argsort 0.23% (4 4 8.457323310946049e-05 0.16144069141128853)</title>
+    <rect height="100%" width="100%" fill="rgb(85, 218, 84)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">argsort</text>
+</g></svg>
+<svg class="func_g" x="1182.661889639632" y="120" width="1.7969146156505795" height="23"><g>
+    <title>series.py:2343:_sort 0.23% (4 4 3.6520259751812476e-05 0.16135611817817908)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 140, 79)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">_sort</text>
+</g></svg>
+<svg class="func_g" x="1182.661889639632" y="96" width="1.7890016798551729" height="23"><g>
+    <title>column.py:983:sort_by_values 0.23% (4 4 4.516979495618913e-05 0.16089961493128144)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 190, 110)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">sort_by_values</text>
+</g></svg>
+<svg class="func_g" x="1182.6656212135651" y="72" width="1.1762405906710733" height="23"><g>
+    <title>column.py:591:__getitem__ 0.18% (4 4 3.36370813503536e-05 0.12554896455099412)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 215, 125)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__getitem__</text>
+</g></svg>
+<svg class="func_g" x="1182.6656212135651" y="48" width="1.1738092919472365" height="23"><g>
+    <title>column.py:825:take 0.18% (7 7 6.516056536271042e-05 0.12540870108995936)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 90, 49)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">take</text>
+</g></svg>
+<svg class="func_g" x="1182.6704911800616" y="24" width="1.1631452388061345" height="23"><g>
+    <title>frame.py:507:_gather 0.18% (7 7 0.004735565243762695 0.12479348380400233)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 90, 49)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">_gather</text>
+</g></svg>
+<svg class="func_g" x="1182.78683586532" y="0" width="1" height="23"><g>
+    <title>~:0:&lt;cudf._lib.copying.gather&gt; 0.16% (5 5 0.07704972808278493 0.1133459057304751)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 165, 95)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">&lt;cudf._lib.copying.gather&gt;</text>
+</g></svg>
+<svg class="func_g" x="1186.3678679774612" y="216" width="1.3112888377683016" height="23"><g>
+    <title>~:0:&lt;built-in method torch._C._from_dlpack&gt; 0.19% (4 4 0.09971 0.13334)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 215, 125)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">&lt;built-in method torch._C._from_dlpack&gt;</text>
+</g></svg>
+<svg class="func_g" x="1189.9692941851577" y="240" width="1" height="23"><g>
+    <title>~:0:&lt;method 'int' of 'torch._C._TensorBase' objects&gt; 0.11% (2 2 0.073408 0.073408)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 190, 110)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">&lt;method 'int' of 'torch._C._TensorBase' objects&gt;</text>
+</g></svg>
+<svg class="func_g" x="1192.3681880460701" y="360" width="1" height="23"><g>
+    <title>msms_profiler.py:21:__init__ 0.10% (1 1 3.4e-05 0.06941)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 190, 110)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__init__</text>
+</g></svg>
+<svg class="func_g" x="1192.3681880460701" y="336" width="1" height="23"><g>
+    <title>npyio.py:283:load 0.10% (1 1 0.000125 0.069367)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 165, 95)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">load</text>
+</g></svg>
+<svg class="func_g" x="1193.5713270758401" y="360" width="5.194423956455062" height="23"><g>
+    <title>tensor.py:528:__format__ 0.52% (6 6 7.4e-05 0.357361)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 215, 125)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__format__</text>
+</g></svg>
+<svg class="func_g" x="1193.5884586473487" y="336" width="4.584173285944093" height="23"><g>
+    <title>~:0:&lt;function Tensor.__format__ at 0x2ac6af1fa5f0&gt; 0.47% (5 5 1.442822348810855e-05 0.32215517757042367)</title>
+    <rect height="100%" width="100%" fill="rgb(57, 242, 168)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">&lt;function Tensor.__format__ at 0x2ac6af1fa5f0&gt;</text>
+</g></svg>
+<svg class="func_g" x="1193.5884586473487" y="312" width="4.583923190009663" height="23"><g>
+    <title>tensor.py:173:__repr__ 0.47% (5 5 3.065997491223066e-05 0.32214074934693554)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 165, 95)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__repr__</text>
+</g></svg>
+<svg class="func_g" x="1193.588583695316" y="288" width="4.583266688181784" height="23"><g>
+    <title>_tensor_str.py:370:_str 0.47% (5 5 5.230231014439347e-05 0.3221028752602792)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 165, 95)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">_str</text>
+</g></svg>
+<svg class="func_g" x="1193.588583695316" y="264" width="4.580312429956329" height="23"><g>
+    <title>_tensor_str.py:277:_str_intern 0.47% (5 5 0.00027233271833804873 0.3219324418703259)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 165, 95)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">_str_intern</text>
+</g></svg>
+<svg class="func_g" x="1193.588583695316" y="240" width="4.573981876616071" height="23"><g>
+    <title>_tensor_str.py:220:_tensor_str 0.46% (5 5 8.566757696064448e-05 0.3215672274632832)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 165, 95)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">_tensor_str</text>
+</g></svg>
+<svg class="func_g" x="1193.588583695316" y="216" width="3.822318545686808" height="23"><g>
+    <title>_tensor_str.py:74:__init__ 0.40% (5 5 0.02955441228745434 0.278203201769773)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 215, 125)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__init__</text>
+</g></svg>
+<svg class="func_g" x="1194.0148253225639" y="192" width="1" height="23"><g>
+    <title>~:0:&lt;built-in method isfinite&gt; 0.16% (2 2 0.11164288805907994 0.11164288805907994)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 190, 110)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">&lt;built-in method isfinite&gt;</text>
+</g></svg>
+<svg class="func_g" x="3.6501688521530427" y="432" width="1" height="23"><g>
+    <title>column.py:48:__init__ 0.12% (7804 7804 0.084552 0.084816)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 240, 141)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__init__</text>
+</g></svg>
+<svg class="func_g" x="3.6501688521530427" y="456" width="1" height="23"><g>
+    <title>numerical.py:23:__init__ 0.12% (7754 7754 0.08431899999999999 0.08431899999999999)</title>
+    <rect height="100%" width="100%" fill="rgb(204, 204, 204)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__init__</text>
+</g></svg>
+<svg class="func_g" x="3.6501688521530427" y="480" width="1" height="23"><g>
+    <title>column.py:1401:build_column 0.02% (7754 7754 0.014360999999999999 0.09867999999999999)</title>
+    <rect height="100%" width="100%" fill="rgb(225, 225, 225)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">build_column</text>
+</g></svg>
+<svg class="func_g" x="21.143110059501534" y="432" width="1" height="23"><g>
+    <title>~:0:&lt;built-in method cudf._lib.join.join&gt; 0.14% (4 4 0.09619699999999999 0.098022)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 90, 49)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">&lt;built-in method cudf._lib.join.join&gt;</text>
+</g></svg>
+<svg class="func_g" x="21.143110059501534" y="456" width="1" height="23"><g>
+    <title>join.py:101:perform_merge 0.14% (4 4 0.09619699999999999 0.098022)</title>
+    <rect height="100%" width="100%" fill="rgb(211, 211, 211)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">perform_merge</text>
+</g></svg>
+<svg class="func_g" x="21.143110059501534" y="480" width="1" height="23"><g>
+    <title>frame.py:3173:_merge 0.00% (4 4 0.002632 0.144204)</title>
+    <rect height="100%" width="100%" fill="rgb(211, 211, 211)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">_merge</text>
+</g></svg>
+<svg class="func_g" x="21.143110059501534" y="504" width="1" height="23"><g>
+    <title>dataframe.py:3973:merge 0.00% (4 4 5.4999999999999995e-05 0.16652499999999998)</title>
+    <rect height="100%" width="100%" fill="rgb(225, 225, 225)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">merge</text>
+</g></svg>
+<svg class="func_g" x="21.143110059501534" y="528" width="1" height="23"><g>
+    <title>contextlib.py:71:inner 0.00% (4 4 5.2e-05 0.168717)</title>
+    <rect height="100%" width="100%" fill="rgb(211, 211, 211)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">inner</text>
+</g></svg>
+<svg class="func_g" x="21.15601457099404" y="552" width="1" height="23"><g>
+    <title>msms_profiler.py:45:read_file 0.00% (8 8 8.8e-05 66.660256)</title>
+    <rect height="100%" width="100%" fill="rgb(197, 197, 197)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">read_file</text>
+</g></svg>
+<svg class="func_g" x="21.15601457099404" y="576" width="1" height="23"><g>
+    <title>msms_profiler.py:37:__getitem__ 0.05% (2 2 0.034464999999999996 68.166642)</title>
+    <rect height="100%" width="100%" fill="rgb(211, 211, 211)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__getitem__</text>
+</g></svg>
+<svg class="func_g" x="21.15601457099404" y="600" width="1" height="23"><g>
+    <title>fetch.py:44:&lt;listcomp&gt; 0.06% (2 2 0.039501 68.307817)</title>
+    <rect height="100%" width="100%" fill="rgb(225, 225, 225)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">&lt;listcomp&gt;</text>
+</g></svg>
+<svg class="func_g" x="21.15601457099404" y="624" width="1" height="23"><g>
+    <title>fetch.py:42:fetch 0.00% (1 1 1.2e-05 68.307829)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">fetch</text>
+</g></svg>
+<svg class="func_g" x="21.15601457099404" y="648" width="1" height="23"><g>
+    <title>dataloader.py:473:_next_data 0.00% (1 1 1.1e-05 68.41899)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">_next_data</text>
+</g></svg>
+<svg class="func_g" x="21.15601457099404" y="672" width="1" height="23"><g>
+    <title>dataloader.py:432:__next__ 0.00% (2 2 0.000435 68.45984899999999)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__next__</text>
+</g></svg>
+<svg class="func_g" x="21.15601457099404" y="696" width="1" height="23"><g>
+    <title>msms_profiler.py:71:main 0.00% (2 2 9.999999999999999e-06 68.459859)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">main</text>
+</g></svg>
+<svg class="func_g" x="23.370901984628997" y="432" width="1" height="23"><g>
+    <title>~:0:&lt;built-in method empty&gt; 0.15% (2 2 0.106205 0.106205)</title>
+    <rect height="100%" width="100%" fill="rgb(166, 166, 255)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">&lt;built-in method empty&gt;</text>
+</g></svg>
+<svg class="func_g" x="23.370901984628997" y="456" width="1" height="23"><g>
+    <title>dataloader.py:401:__init__ 0.15% (1 1 0.10617499999999999 0.10617499999999999)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__init__</text>
+</g></svg>
+<svg class="func_g" x="23.370901984628997" y="480" width="1" height="23"><g>
+    <title>dataloader.py:465:__init__ 0.00% (1 1 7.999999999999999e-05 0.328582)</title>
+    <rect height="100%" width="100%" fill="rgb(232, 232, 232)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__init__</text>
+</g></svg>
+<svg class="func_g" x="23.370901984628997" y="504" width="1" height="23"><g>
+    <title>dataloader.py:290:_get_iterator 0.00% (1 1 1.4e-05 0.32861799999999997)</title>
+    <rect height="100%" width="100%" fill="rgb(190, 190, 190)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">_get_iterator</text>
+</g></svg>
+<svg class="func_g" x="23.370901984628997" y="528" width="1" height="23"><g>
+    <title>dataloader.py:339:__iter__ 0.00% (1 1 4.9999999999999996e-06 0.328623)</title>
+    <rect height="100%" width="100%" fill="rgb(204, 204, 204)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__iter__</text>
+</g></svg>
+<svg class="func_g" x="23.370901984628997" y="552" width="1" height="23"><g>
+    <title>msms_profiler.py:71:main 0.00% (1 1 3e-06 0.328626)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">main</text>
+</g></svg>
+<svg class="func_g" x="25.3054406882373" y="432" width="1.1460110586463523" height="23"><g>
+    <title>~:0:&lt;built-in method isfinite&gt; 0.18% (2 2 0.123805 0.123805)</title>
+    <rect height="100%" width="100%" fill="rgb(214, 214, 255)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">&lt;built-in method isfinite&gt;</text>
+</g></svg>
+<svg class="func_g" x="25.3054406882373" y="456" width="1.1460110586463523" height="23"><g>
+    <title>_tensor_str.py:74:__init__ 0.18% (2 2 0.123805 0.123805)</title>
+    <rect height="100%" width="100%" fill="rgb(197, 197, 197)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__init__</text>
+</g></svg>
+<svg class="func_g" x="25.3054406882373" y="480" width="1.1460110586463523" height="23"><g>
+    <title>_tensor_str.py:220:_tensor_str 0.05% (6 6 0.032774 0.30851)</title>
+    <rect height="100%" width="100%" fill="rgb(211, 211, 211)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">_tensor_str</text>
+</g></svg>
+<svg class="func_g" x="25.3054406882373" y="504" width="1.1460110586463523" height="23"><g>
+    <title>_tensor_str.py:277:_str_intern 0.00% (6 6 9.499999999999999e-05 0.35659799999999997)</title>
+    <rect height="100%" width="100%" fill="rgb(211, 211, 211)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">_str_intern</text>
+</g></svg>
+<svg class="func_g" x="25.3054406882373" y="528" width="1.1460110586463523" height="23"><g>
+    <title>_tensor_str.py:370:_str 0.00% (6 6 0.00030199999999999997 0.35700299999999996)</title>
+    <rect height="100%" width="100%" fill="rgb(211, 211, 211)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">_str</text>
+</g></svg>
+<svg class="func_g" x="25.3054406882373" y="552" width="1.1460110586463523" height="23"><g>
+    <title>tensor.py:173:__repr__ 0.00% (6 6 5.8e-05 0.357192)</title>
+    <rect height="100%" width="100%" fill="rgb(211, 211, 211)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__repr__</text>
+</g></svg>
+<svg class="func_g" x="25.3054406882373" y="576" width="1.1460110586463523" height="23"><g>
+    <title>~:0:&lt;function Tensor.__format__ at 0x2ac6af1fa5f0&gt; 0.00% (6 6 3.4e-05 0.357234)</title>
+    <rect height="100%" width="100%" fill="rgb(204, 204, 204)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">&lt;function Tensor.__format__ at 0x2ac6af1fa5f0&gt;</text>
+</g></svg>
+<svg class="func_g" x="25.3054406882373" y="600" width="1.1460110586463523" height="23"><g>
+    <title>tensor.py:528:__format__ 0.00% (6 6 1.6e-05 0.35724999999999996)</title>
+    <rect height="100%" width="100%" fill="rgb(197, 197, 197)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__format__</text>
+</g></svg>
+<svg class="func_g" x="25.3054406882373" y="624" width="1" height="23"><g>
+    <title>msms_profiler.py:71:main 0.00% (6 6 7.4e-05 0.357361)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">main</text>
+</g></svg>
+<svg class="func_g" x="28.29572912367367" y="432" width="7.884386980138215" height="23"><g>
+    <title>~:0:&lt;built-in method posix.stat&gt; 0.74% (19 19 0.512547 0.512547)</title>
+    <rect height="100%" width="100%" fill="rgb(166, 166, 255)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">&lt;built-in method posix.stat&gt;</text>
+</g></svg>
+<svg class="func_g" x="28.4564134459034" y="456" width="7.7182078434374155" height="23"><g>
+    <title>genericpath.py:16:exists 0.73% (2 2 0.50296 0.50296)</title>
+    <rect height="100%" width="100%" fill="rgb(197, 197, 197)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">exists</text>
+</g></svg>
+<svg class="func_g" x="28.4564134459034" y="480" width="7.7182078434374155" height="23"><g>
+    <title>ioutils.py:1090:get_filepath_or_buffer 0.00% (2 2 1.7e-05 0.502977)</title>
+    <rect height="100%" width="100%" fill="rgb(211, 211, 211)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">get_filepath_or_buffer</text>
+</g></svg>
+<svg class="func_g" x="28.4564134459034" y="504" width="7.7182078434374155" height="23"><g>
+    <title>csv.py:13:read_csv 0.00% (2 2 4.6e-05 0.503356)</title>
+    <rect height="100%" width="100%" fill="rgb(204, 204, 204)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">read_csv</text>
+</g></svg>
+<svg class="func_g" x="28.4564134459034" y="528" width="7.7182078434374155" height="23"><g>
+    <title>contextlib.py:71:inner 0.00% (2 2 7.7e-05 66.20684299999999)</title>
+    <rect height="100%" width="100%" fill="rgb(211, 211, 211)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">inner</text>
+</g></svg>
+<svg class="func_g" x="28.52388387741654" y="552" width="7.650737411924281" height="23"><g>
+    <title>msms_profiler.py:45:read_file 0.00% (8 8 8.8e-05 66.660256)</title>
+    <rect height="100%" width="100%" fill="rgb(197, 197, 197)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">read_file</text>
+</g></svg>
+<svg class="func_g" x="28.52388387741654" y="576" width="7.650737411924281" height="23"><g>
+    <title>msms_profiler.py:37:__getitem__ 0.05% (2 2 0.034464999999999996 68.166642)</title>
+    <rect height="100%" width="100%" fill="rgb(211, 211, 211)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__getitem__</text>
+</g></svg>
+<svg class="func_g" x="28.52388387741654" y="600" width="7.650737411924281" height="23"><g>
+    <title>fetch.py:44:&lt;listcomp&gt; 0.06% (2 2 0.039501 68.307817)</title>
+    <rect height="100%" width="100%" fill="rgb(225, 225, 225)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">&lt;listcomp&gt;</text>
+</g></svg>
+<svg class="func_g" x="28.52388387741654" y="624" width="7.650737411924281" height="23"><g>
+    <title>fetch.py:42:fetch 0.00% (1 1 1.2e-05 68.307829)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">fetch</text>
+</g></svg>
+<svg class="func_g" x="28.52388387741654" y="648" width="7.650737411924281" height="23"><g>
+    <title>dataloader.py:473:_next_data 0.00% (1 1 1.1e-05 68.41899)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">_next_data</text>
+</g></svg>
+<svg class="func_g" x="28.52388387741654" y="672" width="7.650737411924281" height="23"><g>
+    <title>dataloader.py:432:__next__ 0.00% (2 2 0.000435 68.45984899999999)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__next__</text>
+</g></svg>
+<svg class="func_g" x="28.52388387741654" y="696" width="7.650737411924281" height="23"><g>
+    <title>msms_profiler.py:71:main 0.00% (2 2 9.999999999999999e-06 68.459859)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">main</text>
+</g></svg>
+<svg class="func_g" x="37.71973461895036" y="432" width="1" height="23"><g>
+    <title>~:0:&lt;built-in method stack&gt; 0.16% (29 29 0.11165699999999999 0.11165699999999999)</title>
+    <rect height="100%" width="100%" fill="rgb(182, 182, 255)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">&lt;built-in method stack&gt;</text>
+</g></svg>
+<svg class="func_g" x="37.7348670259953" y="456" width="1" height="23"><g>
+    <title>collate.py:42:default_collate 0.16% (3 3 0.110784 0.110784)</title>
+    <rect height="100%" width="100%" fill="rgb(232, 232, 232)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">default_collate</text>
+</g></svg>
+<svg class="func_g" x="39.9370049277247" y="432" width="1" height="23"><g>
+    <title>~:0:&lt;built-in method torch._C._from_dlpack&gt; 0.14% (4 4 0.09971 0.13334)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 215, 125)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">&lt;built-in method torch._C._from_dlpack&gt;</text>
+</g></svg>
+<svg class="func_g" x="39.9370049277247" y="456" width="1" height="23"><g>
+    <title>msms_profiler.py:45:read_file 0.14% (4 4 0.09971 0.13334)</title>
+    <rect height="100%" width="100%" fill="rgb(197, 197, 197)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">read_file</text>
+</g></svg>
+<svg class="func_g" x="39.9370049277247" y="480" width="1" height="23"><g>
+    <title>msms_profiler.py:37:__getitem__ 0.05% (2 2 0.034464999999999996 68.166642)</title>
+    <rect height="100%" width="100%" fill="rgb(211, 211, 211)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__getitem__</text>
+</g></svg>
+<svg class="func_g" x="39.9370049277247" y="504" width="1" height="23"><g>
+    <title>fetch.py:44:&lt;listcomp&gt; 0.06% (2 2 0.039501 68.307817)</title>
+    <rect height="100%" width="100%" fill="rgb(225, 225, 225)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">&lt;listcomp&gt;</text>
+</g></svg>
+<svg class="func_g" x="39.9370049277247" y="528" width="1" height="23"><g>
+    <title>fetch.py:42:fetch 0.00% (1 1 1.2e-05 68.307829)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">fetch</text>
+</g></svg>
+<svg class="func_g" x="39.9370049277247" y="552" width="1" height="23"><g>
+    <title>dataloader.py:473:_next_data 0.00% (1 1 1.1e-05 68.41899)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">_next_data</text>
+</g></svg>
+<svg class="func_g" x="39.9370049277247" y="576" width="1" height="23"><g>
+    <title>dataloader.py:432:__next__ 0.00% (2 2 0.000435 68.45984899999999)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__next__</text>
+</g></svg>
+<svg class="func_g" x="39.9370049277247" y="600" width="1" height="23"><g>
+    <title>msms_profiler.py:71:main 0.00% (2 2 9.999999999999999e-06 68.459859)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">main</text>
+</g></svg>
+<svg class="func_g" x="41.98981214595798" y="432" width="3.0138493014197048" height="23"><g>
+    <title>~:0:&lt;cudf._lib.copying.gather&gt; 0.33% (14 14 0.231562 0.340645)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 165, 95)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">&lt;cudf._lib.copying.gather&gt;</text>
+</g></svg>
+<svg class="func_g" x="41.98981214595798" y="456" width="3.0138493014197048" height="23"><g>
+    <title>frame.py:507:_gather 0.33% (14 14 0.231562 0.340645)</title>
+    <rect height="100%" width="100%" fill="rgb(232, 232, 232)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">_gather</text>
+</g></svg>
+<svg class="func_g" x="41.98981214595798" y="480" width="1" height="23"><g>
+    <title>column.py:825:take 0.01% (8 8 0.005595999999999999 0.147468)</title>
+    <rect height="100%" width="100%" fill="rgb(232, 232, 232)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">take</text>
+</g></svg>
+<svg class="func_g" x="41.98981214595798" y="504" width="1" height="23"><g>
+    <title>column.py:591:__getitem__ 0.00% (8 8 7.7e-05 0.148195)</title>
+    <rect height="100%" width="100%" fill="rgb(197, 197, 197)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__getitem__</text>
+</g></svg>
+<svg class="func_g" x="41.98981214595798" y="528" width="1" height="23"><g>
+    <title>column.py:983:sort_by_values 0.00% (4 4 3.5e-05 0.130636)</title>
+    <rect height="100%" width="100%" fill="rgb(204, 204, 204)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">sort_by_values</text>
+</g></svg>
+<svg class="func_g" x="41.98981214595798" y="552" width="1" height="23"><g>
+    <title>series.py:2343:_sort 0.00% (4 4 4.7e-05 0.16741899999999998)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">_sort</text>
+</g></svg>
+<svg class="func_g" x="41.98981214595798" y="576" width="1" height="23"><g>
+    <title>series.py:2240:argsort 0.00% (4 4 3.7999999999999995e-05 0.167894)</title>
+    <rect height="100%" width="100%" fill="rgb(225, 225, 225)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">argsort</text>
+</g></svg>
+<svg class="func_g" x="41.98981214595798" y="600" width="1" height="23"><g>
+    <title>dataframe.py:3669:sort_values 0.00% (4 4 8.8e-05 0.167982)</title>
+    <rect height="100%" width="100%" fill="rgb(225, 225, 225)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">sort_values</text>
+</g></svg>
+<svg class="func_g" x="41.98981214595798" y="624" width="1" height="23"><g>
+    <title>column.py:844:isin 0.00% (2 2 9.8e-05 0.172958)</title>
+    <rect height="100%" width="100%" fill="rgb(232, 232, 232)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">isin</text>
+</g></svg>
+<svg class="func_g" x="41.98981214595798" y="648" width="1" height="23"><g>
+    <title>series.py:3652:isin 0.00% (2 2 0.002029 0.590853)</title>
+    <rect height="100%" width="100%" fill="rgb(232, 232, 232)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">isin</text>
+</g></svg>
+<svg class="func_g" x="41.98981214595798" y="672" width="1" height="23"><g>
+    <title>msms_profiler.py:45:read_file 0.00% (2 2 0.000127 0.591282)</title>
+    <rect height="100%" width="100%" fill="rgb(197, 197, 197)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">read_file</text>
+</g></svg>
+<svg class="func_g" x="41.98981214595798" y="696" width="1" height="23"><g>
+    <title>msms_profiler.py:37:__getitem__ 0.05% (2 2 0.034464999999999996 68.166642)</title>
+    <rect height="100%" width="100%" fill="rgb(211, 211, 211)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__getitem__</text>
+</g></svg>
+<svg class="func_g" x="41.98981214595798" y="720" width="1" height="23"><g>
+    <title>fetch.py:44:&lt;listcomp&gt; 0.06% (2 2 0.039501 68.307817)</title>
+    <rect height="100%" width="100%" fill="rgb(225, 225, 225)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">&lt;listcomp&gt;</text>
+</g></svg>
+<svg class="func_g" x="41.98981214595798" y="744" width="1" height="23"><g>
+    <title>fetch.py:42:fetch 0.00% (1 1 1.2e-05 68.307829)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">fetch</text>
+</g></svg>
+<svg class="func_g" x="41.98981214595798" y="768" width="1" height="23"><g>
+    <title>dataloader.py:473:_next_data 0.00% (1 1 1.1e-05 68.41899)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">_next_data</text>
+</g></svg>
+<svg class="func_g" x="41.98981214595798" y="792" width="1" height="23"><g>
+    <title>dataloader.py:432:__next__ 0.00% (2 2 0.000435 68.45984899999999)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__next__</text>
+</g></svg>
+<svg class="func_g" x="41.98981214595798" y="816" width="1" height="23"><g>
+    <title>msms_profiler.py:71:main 0.00% (2 2 9.999999999999999e-06 68.459859)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">main</text>
+</g></svg>
+<svg class="func_g" x="43.69116117561701" y="480" width="1.3125002717606624" height="23"><g>
+    <title>indexing.py:387:_getitem_tuple_arg 0.00% (2 2 2.4999999999999998e-05 0.211146)</title>
+    <rect height="100%" width="100%" fill="rgb(190, 190, 190)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">_getitem_tuple_arg</text>
+</g></svg>
+<svg class="func_g" x="43.69116117561701" y="504" width="1.3125002717606624" height="23"><g>
+    <title>contextlib.py:71:inner 0.00% (2 2 4.8e-05 0.25168199999999996)</title>
+    <rect height="100%" width="100%" fill="rgb(211, 211, 211)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">inner</text>
+</g></svg>
+<svg class="func_g" x="43.7090576738437" y="528" width="1.294603773533979" height="23"><g>
+    <title>msms_profiler.py:45:read_file 0.00% (8 8 8.8e-05 66.660256)</title>
+    <rect height="100%" width="100%" fill="rgb(197, 197, 197)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">read_file</text>
+</g></svg>
+<svg class="func_g" x="43.7090576738437" y="552" width="1.294603773533979" height="23"><g>
+    <title>msms_profiler.py:37:__getitem__ 0.05% (2 2 0.034464999999999996 68.166642)</title>
+    <rect height="100%" width="100%" fill="rgb(211, 211, 211)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__getitem__</text>
+</g></svg>
+<svg class="func_g" x="43.7090576738437" y="576" width="1.294603773533979" height="23"><g>
+    <title>fetch.py:44:&lt;listcomp&gt; 0.06% (2 2 0.039501 68.307817)</title>
+    <rect height="100%" width="100%" fill="rgb(225, 225, 225)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">&lt;listcomp&gt;</text>
+</g></svg>
+<svg class="func_g" x="43.7090576738437" y="600" width="1.294603773533979" height="23"><g>
+    <title>fetch.py:42:fetch 0.00% (1 1 1.2e-05 68.307829)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">fetch</text>
+</g></svg>
+<svg class="func_g" x="43.7090576738437" y="624" width="1.294603773533979" height="23"><g>
+    <title>dataloader.py:473:_next_data 0.00% (1 1 1.1e-05 68.41899)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">_next_data</text>
+</g></svg>
+<svg class="func_g" x="43.7090576738437" y="648" width="1.294603773533979" height="23"><g>
+    <title>dataloader.py:432:__next__ 0.00% (2 2 0.000435 68.45984899999999)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__next__</text>
+</g></svg>
+<svg class="func_g" x="43.7090576738437" y="672" width="1.294603773533979" height="23"><g>
+    <title>msms_profiler.py:71:main 0.00% (2 2 9.999999999999999e-06 68.459859)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">main</text>
+</g></svg>
+<svg class="func_g" x="46.00366144737768" y="432" width="1133.1648251069444" height="23"><g>
+    <title>~:0:&lt;cudf._lib.csv.read_csv&gt; 94.51% (2 2 65.430826 65.69207899999999)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 165, 95)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">&lt;cudf._lib.csv.read_csv&gt;</text>
+</g></svg>
+<svg class="func_g" x="46.00366144737768" y="456" width="1133.1648251069444" height="23"><g>
+    <title>csv.py:13:read_csv 94.51% (2 2 65.430826 65.69207899999999)</title>
+    <rect height="100%" width="100%" fill="rgb(204, 204, 204)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">read_csv</text>
+</g></svg>
+<svg class="func_g" x="46.00366144737768" y="480" width="1133.1648251069444" height="23"><g>
+    <title>contextlib.py:71:inner 0.00% (2 2 7.7e-05 66.20684299999999)</title>
+    <rect height="100%" width="100%" fill="rgb(211, 211, 211)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">inner</text>
+</g></svg>
+<svg class="func_g" x="46.00366144737768" y="504" width="1.7496760895841548" height="23"><g>
+    <title>column.py:844:isin 0.00% (6 6 0.00018899999999999999 0.162872)</title>
+    <rect height="100%" width="100%" fill="rgb(232, 232, 232)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">isin</text>
+</g></svg>
+<svg class="func_g" x="46.00366144737768" y="528" width="1.7496760895841548" height="23"><g>
+    <title>series.py:3652:isin 0.00% (2 2 0.002029 0.590853)</title>
+    <rect height="100%" width="100%" fill="rgb(232, 232, 232)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">isin</text>
+</g></svg>
+<svg class="func_g" x="46.00366144737768" y="552" width="1.7496760895841548" height="23"><g>
+    <title>msms_profiler.py:45:read_file 0.00% (2 2 0.000127 0.591282)</title>
+    <rect height="100%" width="100%" fill="rgb(197, 197, 197)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">read_file</text>
+</g></svg>
+<svg class="func_g" x="46.00366144737768" y="576" width="1.7496760895841548" height="23"><g>
+    <title>msms_profiler.py:37:__getitem__ 0.05% (2 2 0.034464999999999996 68.166642)</title>
+    <rect height="100%" width="100%" fill="rgb(211, 211, 211)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__getitem__</text>
+</g></svg>
+<svg class="func_g" x="46.00366144737768" y="600" width="1.7496760895841548" height="23"><g>
+    <title>fetch.py:44:&lt;listcomp&gt; 0.06% (2 2 0.039501 68.307817)</title>
+    <rect height="100%" width="100%" fill="rgb(225, 225, 225)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">&lt;listcomp&gt;</text>
+</g></svg>
+<svg class="func_g" x="46.00366144737768" y="624" width="1.7496760895841548" height="23"><g>
+    <title>fetch.py:42:fetch 0.00% (1 1 1.2e-05 68.307829)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">fetch</text>
+</g></svg>
+<svg class="func_g" x="46.00366144737768" y="648" width="1.7496760895841548" height="23"><g>
+    <title>dataloader.py:473:_next_data 0.00% (1 1 1.1e-05 68.41899)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">_next_data</text>
+</g></svg>
+<svg class="func_g" x="46.00366144737768" y="672" width="1.7496760895841548" height="23"><g>
+    <title>dataloader.py:432:__next__ 0.00% (2 2 0.000435 68.45984899999999)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__next__</text>
+</g></svg>
+<svg class="func_g" x="46.00366144737768" y="696" width="1.7496760895841548" height="23"><g>
+    <title>msms_profiler.py:71:main 0.00% (2 2 9.999999999999999e-06 68.459859)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">main</text>
+</g></svg>
+<svg class="func_g" x="49.50141515131889" y="504" width="3.265398061432937" height="23"><g>
+    <title>indexing.py:166:__getitem__ 0.00% (4 4 0.00011999999999999999 0.25265299999999996)</title>
+    <rect height="100%" width="100%" fill="rgb(190, 190, 190)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__getitem__</text>
+</g></svg>
+<svg class="func_g" x="49.50141515131889" y="528" width="3.265398061432937" height="23"><g>
+    <title>msms_profiler.py:45:read_file 0.00% (2 2 3.2999999999999996e-05 0.25270899999999996)</title>
+    <rect height="100%" width="100%" fill="rgb(197, 197, 197)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">read_file</text>
+</g></svg>
+<svg class="func_g" x="49.50141515131889" y="552" width="3.265398061432937" height="23"><g>
+    <title>msms_profiler.py:37:__getitem__ 0.05% (2 2 0.034464999999999996 68.166642)</title>
+    <rect height="100%" width="100%" fill="rgb(211, 211, 211)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__getitem__</text>
+</g></svg>
+<svg class="func_g" x="49.50141515131889" y="576" width="3.265398061432937" height="23"><g>
+    <title>fetch.py:44:&lt;listcomp&gt; 0.06% (2 2 0.039501 68.307817)</title>
+    <rect height="100%" width="100%" fill="rgb(225, 225, 225)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">&lt;listcomp&gt;</text>
+</g></svg>
+<svg class="func_g" x="49.50141515131889" y="600" width="3.265398061432937" height="23"><g>
+    <title>fetch.py:42:fetch 0.00% (1 1 1.2e-05 68.307829)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">fetch</text>
+</g></svg>
+<svg class="func_g" x="49.50141515131889" y="624" width="3.265398061432937" height="23"><g>
+    <title>dataloader.py:473:_next_data 0.00% (1 1 1.1e-05 68.41899)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">_next_data</text>
+</g></svg>
+<svg class="func_g" x="49.50141515131889" y="648" width="3.265398061432937" height="23"><g>
+    <title>dataloader.py:432:__next__ 0.00% (2 2 0.000435 68.45984899999999)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__next__</text>
+</g></svg>
+<svg class="func_g" x="49.50141515131889" y="672" width="3.265398061432937" height="23"><g>
+    <title>msms_profiler.py:71:main 0.00% (2 2 9.999999999999999e-06 68.459859)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">main</text>
+</g></svg>
+<svg class="func_g" x="54.7809917807659" y="504" width="1124.3874947735565" height="23"><g>
+    <title>msms_profiler.py:45:read_file 0.00% (8 8 8.8e-05 66.660256)</title>
+    <rect height="100%" width="100%" fill="rgb(197, 197, 197)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">read_file</text>
+</g></svg>
+<svg class="func_g" x="54.7809917807659" y="528" width="1124.3874947735565" height="23"><g>
+    <title>msms_profiler.py:37:__getitem__ 0.05% (2 2 0.034464999999999996 68.166642)</title>
+    <rect height="100%" width="100%" fill="rgb(211, 211, 211)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__getitem__</text>
+</g></svg>
+<svg class="func_g" x="54.7809917807659" y="552" width="1124.3874947735565" height="23"><g>
+    <title>fetch.py:44:&lt;listcomp&gt; 0.06% (2 2 0.039501 68.307817)</title>
+    <rect height="100%" width="100%" fill="rgb(225, 225, 225)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">&lt;listcomp&gt;</text>
+</g></svg>
+<svg class="func_g" x="54.7809917807659" y="576" width="1124.3874947735565" height="23"><g>
+    <title>fetch.py:42:fetch 0.00% (1 1 1.2e-05 68.307829)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">fetch</text>
+</g></svg>
+<svg class="func_g" x="54.7809917807659" y="600" width="1124.3874947735565" height="23"><g>
+    <title>dataloader.py:473:_next_data 0.00% (1 1 1.1e-05 68.41899)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">_next_data</text>
+</g></svg>
+<svg class="func_g" x="54.7809917807659" y="624" width="1124.3874947735565" height="23"><g>
+    <title>dataloader.py:432:__next__ 0.00% (2 2 0.000435 68.45984899999999)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__next__</text>
+</g></svg>
+<svg class="func_g" x="54.7809917807659" y="648" width="1124.3874947735565" height="23"><g>
+    <title>msms_profiler.py:71:main 0.00% (2 2 9.999999999999999e-06 68.459859)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">main</text>
+</g></svg>
+<svg class="func_g" x="1182.3479518461838" y="432" width="4.172284462038374" height="23"><g>
+    <title>~:0:&lt;cudf._lib.stream_compaction.apply_boolean_mask&gt; 0.43% (2 2 0.29839299999999996 0.398038)</title>
+    <rect height="100%" width="100%" fill="rgb(255, 240, 141)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">&lt;cudf._lib.stream_compaction.apply_boolean_mask&gt;</text>
+</g></svg>
+<svg class="func_g" x="1182.3479518461838" y="456" width="4.172284462038374" height="23"><g>
+    <title>frame.py:1482:_apply_boolean_mask 0.43% (2 2 0.29839299999999996 0.398038)</title>
+    <rect height="100%" width="100%" fill="rgb(197, 197, 197)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">_apply_boolean_mask</text>
+</g></svg>
+<svg class="func_g" x="1182.3479518461838" y="480" width="4.172284462038374" height="23"><g>
+    <title>dataframe.py:616:__getitem__ 0.00% (2 2 3.7999999999999995e-05 0.416568)</title>
+    <rect height="100%" width="100%" fill="rgb(225, 225, 225)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__getitem__</text>
+</g></svg>
+<svg class="func_g" x="1182.3479518461838" y="504" width="4.172284462038374" height="23"><g>
+    <title>contextlib.py:71:inner 0.04% (16 16 0.029807 0.494536)</title>
+    <rect height="100%" width="100%" fill="rgb(211, 211, 211)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">inner</text>
+</g></svg>
+<svg class="func_g" x="1182.3879802867568" y="528" width="4.132256021465569" height="23"><g>
+    <title>msms_profiler.py:45:read_file 0.00% (8 8 8.8e-05 66.660256)</title>
+    <rect height="100%" width="100%" fill="rgb(197, 197, 197)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">read_file</text>
+</g></svg>
+<svg class="func_g" x="1182.3879802867568" y="552" width="4.132256021465569" height="23"><g>
+    <title>msms_profiler.py:37:__getitem__ 0.05% (2 2 0.034464999999999996 68.166642)</title>
+    <rect height="100%" width="100%" fill="rgb(211, 211, 211)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__getitem__</text>
+</g></svg>
+<svg class="func_g" x="1182.3879802867568" y="576" width="4.132256021465569" height="23"><g>
+    <title>fetch.py:44:&lt;listcomp&gt; 0.06% (2 2 0.039501 68.307817)</title>
+    <rect height="100%" width="100%" fill="rgb(225, 225, 225)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">&lt;listcomp&gt;</text>
+</g></svg>
+<svg class="func_g" x="1182.3879802867568" y="600" width="4.132256021465569" height="23"><g>
+    <title>fetch.py:42:fetch 0.00% (1 1 1.2e-05 68.307829)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">fetch</text>
+</g></svg>
+<svg class="func_g" x="1182.3879802867568" y="624" width="4.132256021465569" height="23"><g>
+    <title>dataloader.py:473:_next_data 0.00% (1 1 1.1e-05 68.41899)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">_next_data</text>
+</g></svg>
+<svg class="func_g" x="1182.3879802867568" y="648" width="4.13225602146557" height="23"><g>
+    <title>dataloader.py:432:__next__ 0.00% (2 2 0.000435 68.45984899999999)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__next__</text>
+</g></svg>
+<svg class="func_g" x="1182.3879802867568" y="672" width="4.13225602146557" height="23"><g>
+    <title>msms_profiler.py:71:main 0.00% (2 2 9.999999999999999e-06 68.459859)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">main</text>
+</g></svg>
+<svg class="func_g" x="1189.2068150086482" y="432" width="1" height="23"><g>
+    <title>~:0:&lt;method 'int' of 'torch._C._TensorBase' objects&gt; 0.11% (2 2 0.073408 0.073408)</title>
+    <rect height="100%" width="100%" fill="rgb(198, 198, 255)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">&lt;method 'int' of 'torch._C._TensorBase' objects&gt;</text>
+</g></svg>
+<svg class="func_g" x="1189.2068150086482" y="456" width="1" height="23"><g>
+    <title>msms_profiler.py:37:__getitem__ 0.11% (2 2 0.073408 0.073408)</title>
+    <rect height="100%" width="100%" fill="rgb(211, 211, 211)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__getitem__</text>
+</g></svg>
+<svg class="func_g" x="1189.2068150086482" y="480" width="1" height="23"><g>
+    <title>fetch.py:44:&lt;listcomp&gt; 0.06% (2 2 0.039501 68.307817)</title>
+    <rect height="100%" width="100%" fill="rgb(225, 225, 225)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">&lt;listcomp&gt;</text>
+</g></svg>
+<svg class="func_g" x="1189.2068150086482" y="504" width="1" height="23"><g>
+    <title>fetch.py:42:fetch 0.00% (1 1 1.2e-05 68.307829)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">fetch</text>
+</g></svg>
+<svg class="func_g" x="1189.2068150086482" y="528" width="1" height="23"><g>
+    <title>dataloader.py:473:_next_data 0.00% (1 1 1.1e-05 68.41899)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">_next_data</text>
+</g></svg>
+<svg class="func_g" x="1189.2068150086482" y="552" width="1" height="23"><g>
+    <title>dataloader.py:432:__next__ 0.00% (2 2 0.000435 68.45984899999999)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__next__</text>
+</g></svg>
+<svg class="func_g" x="1189.2068150086482" y="576" width="1" height="23"><g>
+    <title>msms_profiler.py:71:main 0.00% (2 2 9.999999999999999e-06 68.459859)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">main</text>
+</g></svg>
+<svg class="func_g" x="1190.4794625747872" y="432" width="1.2636382226863678" height="23"><g>
+    <title>~:0:&lt;method 'item' of 'torch._C._TensorBase' objects&gt; 0.19% (798 798 0.13059099999999998 0.13059099999999998)</title>
+    <rect height="100%" width="100%" fill="rgb(230, 230, 255)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">&lt;method 'item' of 'torch._C._TensorBase' objects&gt;</text>
+</g></svg>
+<svg class="func_g" x="1190.4794625747872" y="456" width="1" height="23"><g>
+    <title>dataloader.py:401:__init__ 0.14% (1 1 0.09512899999999999 0.09512899999999999)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__init__</text>
+</g></svg>
+<svg class="func_g" x="1190.4794625747872" y="480" width="1" height="23"><g>
+    <title>dataloader.py:465:__init__ 0.00% (1 1 7.999999999999999e-05 0.328582)</title>
+    <rect height="100%" width="100%" fill="rgb(232, 232, 232)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__init__</text>
+</g></svg>
+<svg class="func_g" x="1190.4794625747872" y="504" width="1" height="23"><g>
+    <title>dataloader.py:290:_get_iterator 0.00% (1 1 1.4e-05 0.32861799999999997)</title>
+    <rect height="100%" width="100%" fill="rgb(190, 190, 190)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">_get_iterator</text>
+</g></svg>
+<svg class="func_g" x="1190.4794625747872" y="528" width="1" height="23"><g>
+    <title>dataloader.py:339:__iter__ 0.00% (1 1 4.9999999999999996e-06 0.328623)</title>
+    <rect height="100%" width="100%" fill="rgb(204, 204, 204)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__iter__</text>
+</g></svg>
+<svg class="func_g" x="1190.4794625747872" y="552" width="1" height="23"><g>
+    <title>msms_profiler.py:71:main 0.00% (1 1 3e-06 0.328626)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">main</text>
+</g></svg>
+<svg class="func_g" x="1193.4333846986765" y="432" width="1.2051886504578189" height="23"><g>
+    <title>~:0:&lt;method 'random_' of 'torch._C._TensorBase' objects&gt; 0.18% (2 2 0.127219 0.127219)</title>
+    <rect height="100%" width="100%" fill="rgb(198, 198, 255)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">&lt;method 'random_' of 'torch._C._TensorBase' objects&gt;</text>
+</g></svg>
+<svg class="func_g" x="1193.4333846986765" y="456" width="1.2047379716683935" height="23"><g>
+    <title>dataloader.py:401:__init__ 0.18% (1 1 0.127193 0.127193)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__init__</text>
+</g></svg>
+<svg class="func_g" x="1193.4333846986765" y="480" width="1.2047379716683935" height="23"><g>
+    <title>dataloader.py:465:__init__ 0.00% (1 1 7.999999999999999e-05 0.328582)</title>
+    <rect height="100%" width="100%" fill="rgb(232, 232, 232)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__init__</text>
+</g></svg>
+<svg class="func_g" x="1193.4333846986765" y="504" width="1.2047379716683935" height="23"><g>
+    <title>dataloader.py:290:_get_iterator 0.00% (1 1 1.4e-05 0.32861799999999997)</title>
+    <rect height="100%" width="100%" fill="rgb(190, 190, 190)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">_get_iterator</text>
+</g></svg>
+<svg class="func_g" x="1193.4333846986765" y="528" width="1.2047379716683935" height="23"><g>
+    <title>dataloader.py:339:__iter__ 0.00% (1 1 4.9999999999999996e-06 0.328623)</title>
+    <rect height="100%" width="100%" fill="rgb(204, 204, 204)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">__iter__</text>
+</g></svg>
+<svg class="func_g" x="1193.4333846986765" y="552" width="1.2047379716683935" height="23"><g>
+    <title>msms_profiler.py:71:main 0.00% (1 1 3e-06 0.328626)</title>
+    <rect height="100%" width="100%" fill="rgb(218, 218, 218)" rx="2" ry="2" />
+    <text alignment-baseline="central" x="4.0" y="12.0" font-size="12px" fill="rgb(0,0,0)">main</text>
+</g></svg>
+</svg>

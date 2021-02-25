@@ -4,8 +4,6 @@ import cudf
 import torch
 from torch.utils.dlpack import from_dlpack
 
-import flamegraph
-
 # An extension of torch Datasets for lazy loading msms data
 # To do:
 # - Profile the heck out of things
@@ -70,11 +68,10 @@ def read_file(dir, filename, num_sims, num_indivs, num_sites, rows_to_skip = 6):
 
     return snps, positions
 
-if __name__ == "__main__":
-    flamegraph.start_profile_thread(fd=open("./perf.log", "w"))
-    
+def main():
+
     # Initialize a dataset
-    example_set = msms.Dataset("data", "metadata/lookup.npy")
+    example_set = Dataset("data", "metadata/lookup.npy")
 
     # Initialize a dataloader with the dataset
     # - Note that you currently can't add more `num_workers`, maybe due to fighting over GPU resources?
@@ -107,3 +104,15 @@ if __name__ == "__main__":
         print(f'SNP: {snp}')
         print(f'Positions: {pos}')
         print(f'Labels: {label}')
+
+if __name__ == '__main__':
+    import cProfile, pstats
+    profiler = cProfile.Profile()
+    profiler.enable()
+    main()
+    profiler.disable()
+    stats = pstats.Stats(profiler)
+    stats.strip_dirs()
+    stats.sort_stats('ncalls')
+    stats.print_stats()
+    stats.dump_stats('./profiler/stats.prof')

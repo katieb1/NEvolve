@@ -48,7 +48,9 @@ def read_file(dir, filename, num_sims, num_indivs, num_sites, rows_to_skip = 6):
             os.path.join(dir, filename),
             header=None,
             sep=' ',
-            skiprows = rows_to_skip)
+            skiprows = rows_to_skip,
+            dtype=str,
+            usecols=range(0,num_sites+2))
     
     # Find every row with position data
     pos_rows = data[data['0'].isin(['positions:'])].index.to_pandas()

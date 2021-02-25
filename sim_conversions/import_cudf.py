@@ -7,7 +7,7 @@ from torch.utils.dlpack import from_dlpack
 # Load in ms formatted text file
 
 # set file name
-ms_file = "ms_output_timevar4mini.msout"
+ms_file = "test_inputs/test.msout"
 rows_to_skip = 6 # This number might change depending on the msms run params, could lead to ridiculous number of cols on import
 
 #read in file; no header, use === line as column sep

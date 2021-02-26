@@ -23,9 +23,9 @@ for snp, pos, label in example_loader:
     print(f'Labels: {label}')
 
     print('\nReshaped:')
-    snp = snp.reshape(-1, example_set.num_indivs, example_set.num_sites)
-    pos = pos.reshape(-1, example_set.num_sites)
-    label = label.reshape(-1)
+    snp = snp.view(-1, example_set.num_indivs, example_set.num_sites)
+    pos = pos.view(-1, example_set.num_sites)
+    label = label.view(-1)
 
     print('Shapes:')
     print(f'SNP: {snp.shape}')

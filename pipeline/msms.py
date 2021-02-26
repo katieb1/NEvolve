@@ -48,7 +48,9 @@ def read_file(dir, filename, num_sims, num_indivs, num_sites, rows_to_skip = 6):
             os.path.join(dir, filename),
             header=None,
             sep=' ',
-            skiprows = rows_to_skip)
+            skiprows = rows_to_skip,
+            dtype=str,
+            usecols=range(0,num_sites+2))
     
     # Find every row with position data
     pos_rows = data[data['0'].isin(['positions:'])].index.to_pandas()
@@ -61,7 +63,7 @@ def read_file(dir, filename, num_sims, num_indivs, num_sites, rows_to_skip = 6):
         snp_rows.extend(range(pos_row + 1, pos_row + num_indivs + 1))
     
     # Pull the SNP data out as cuDF series, convert to torch tensor, reshape
-    snps = from_dlpack(data['0'][snp_rows].str.character_tokenize().astype(int).astype(bool).to_dlpack()).reshape(num_sims, num_indivs, num_sites)
+    snps = from_dlpack(data['0'][snp_rows].str.character_tokenize().astype(int).astype(bool).to_dlpack()).view(num_sims, num_indivs, num_sites)
     
     # Extract position data
     positions = from_dlpack(data.iloc[pos_rows, 1:-1].astype(float).to_dlpack())

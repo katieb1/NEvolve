@@ -9,30 +9,31 @@ example_set = msms.Dataset("data", "metadata/lookup.npy")
 # - Note that you currently can't add more `num_workers`, maybe due to fighting over GPU resources?
 example_loader = torch.utils.data.DataLoader(example_set, batch_size = 2, shuffle = True, num_workers = 0)
 
-# This is just a sanity check to make sure `reshape()` can be used to combine chunks (each file) into minibatch sizes of our choice
-# Note that we cannot randomize within chunks (msms output files) at the moment, so we should make balanced files
+# Set the network parameters
+# Max pooling size for all convolutional layers. Our low `num_indivs` generally makes this a bad idea, but you can make it work with few convolutional layers.
+pool_size = 1
+# The number of channels per convolution layer (think colour channels in an image), input channels assumed to be 1
+channels = [4, 6, 8]
+# The size of the kernel at each convolution step. Length of this list should match length of `channels`
+kernels = [5, 4, 3]
+# The nodes in each hidden fully connected layer. The last should be the number of labels. The length of the list is independent of the other lists.
+nodes = [500, 100, 5]
+
+# Create the network with the given parameters and send it to the gpu
+example_net = msms.Net(example_set.num_indivs, example_set.num_sites, pool_size, channels, kernels, nodes).cuda()
+
+# Try running the network
 for snp, pos, label in example_loader:
-    print('Shapes:')
-    print(f'SNP: {snp.shape}')
-    print(f'Positions: {pos.shape}')
-    print(f'Labels: {label.shape}')
+    # The data loader reads in each file as though it were a training example
+    # As each file is actually a collection of training examples (a chunk), we must reshape with `view()`
+    # We also need to add a dimension to snp (with unsqueeze) to indicate there is only one colour channel
+    snp = snp.view(-1, example_set.num_indivs, example_set.num_sites).unsqueeze(1)
+    pos = pos.view(-1, example_set.num_sites)
+    label = label.view(-1)
 
-    print('\nData:')
-    print(f'SNP: {snp}')
-    print(f'Positions: {pos}')
-    print(f'Labels: {label}')
+    # Perform one forward pass
+    out = example_net(snp, pos)
 
-    print('\nReshaped:')
-    snp = snp.reshape(-1, example_set.num_indivs, example_set.num_sites)
-    pos = pos.reshape(-1, example_set.num_sites)
-    label = label.reshape(-1)
-
-    print('Shapes:')
-    print(f'SNP: {snp.shape}')
-    print(f'Positions: {pos.shape}')
-    print(f'Labels: {label.shape}')
-
-    print('\nData:')
-    print(f'SNP: {snp}')
-    print(f'Positions: {pos}')
-    print(f'Labels: {label}')
+    # Print output and shape
+    print(out)
+    print(out.shape)

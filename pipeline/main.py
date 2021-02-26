@@ -12,11 +12,11 @@ example_loader = torch.utils.data.DataLoader(example_set, batch_size = 2, shuffl
 # Set the network parameters
 # Max pooling size for all convolutional layers. Our low `num_indivs` generally makes this a bad idea, but you can make it work with few convolutional layers.
 pool_size = 1
-# The number of channels per training example, input channels assumed to be 1
+# The number of channels per convolution layer (think colour channels in an image), input channels assumed to be 1
 channels = [4, 6, 8]
-# The size of the kernel at each convolution step
+# The size of the kernel at each convolution step. Length of this list should match length of `channels`
 kernels = [5, 4, 3]
-# The nodes in each hidden linear layer. The last should be the number of labels
+# The nodes in each hidden fully connected layer. The last should be the number of labels. The length of the list is independent of the other lists.
 nodes = [500, 100, 5]
 
 # Create the network with the given parameters and send it to the gpu

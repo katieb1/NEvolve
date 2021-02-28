@@ -53,7 +53,7 @@ with open('./cnn_batched/ms_param.csv', 'w') as csvfile:
             for z in range(32): #run through sim generation for all sims in batch
               #following lines divide one batch into even numbers of each scenario
                 scen = np.random.choice(np.arange(1,6), p=np.repeat(0.2,5))
-                scenario = scene - 1
+                scenario = scen - 1
 
                 it_all = q+z # get current index out of number of sims
                 ne0 = mspar['ne0_rand'][it_all] # get random Ne for this sim

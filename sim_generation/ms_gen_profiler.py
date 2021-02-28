@@ -5,6 +5,7 @@ import collections
 import random
 import csv
 import time
+import numpy as np
 
 # port of ms paramter gen script from R
 

@@ -3,7 +3,7 @@ import msms
 import torch
 
 # Initialize a dataset
-example_set = msms.Dataset("data", "metadata/lookup.npy")
+example_set = msms.Dataset("data", "metadata/lookup.npy", "metadata/ms_param.csv")
 
 # Initialize a dataloader with the dataset
 # - Note that you currently can't add more `num_workers`, maybe due to fighting over GPU resources?

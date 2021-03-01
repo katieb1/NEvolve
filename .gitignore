@@ -4,3 +4,4 @@
 */__pycache__/
 */cnn_batched/
 */seedms
+pipeline/data/*.msout

@@ -2,3 +2,5 @@
 */outputs/
 *.DS_Store
 */__pycache__/
+*/cnn_batched/
+*/seedms

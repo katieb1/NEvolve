@@ -1,0 +1,20 @@
+ms_gen_profiler.py:11:main 1653624
+ms_gen_profiler.py:11:main;<__array_function__ internals>:2:repeat 6969
+ms_gen_profiler.py:11:main;<__array_function__ internals>:2:repeat;~:0:<built-in method numpy.core._multiarray_umath.implement_array_function> 3911
+ms_gen_profiler.py:11:main;<__array_function__ internals>:2:repeat;~:0:<built-in method numpy.core._multiarray_umath.implement_array_function>;fromnumeric.py:437:repeat 7347
+ms_gen_profiler.py:11:main;<__array_function__ internals>:2:repeat;~:0:<built-in method numpy.core._multiarray_umath.implement_array_function>;fromnumeric.py:437:repeat;fromnumeric.py:52:_wrapfunc 8545
+ms_gen_profiler.py:11:main;<__array_function__ internals>:2:repeat;~:0:<built-in method numpy.core._multiarray_umath.implement_array_function>;fromnumeric.py:437:repeat;fromnumeric.py:52:_wrapfunc;fromnumeric.py:39:_wrapit 47716
+ms_gen_profiler.py:11:main;subprocess.py:732:__init__ 46329
+ms_gen_profiler.py:11:main;subprocess.py:732:__init__;subprocess.py:1550:_execute_child 166105
+ms_gen_profiler.py:11:main;subprocess.py:732:__init__;subprocess.py:1550:_execute_child;subprocess.py:1097:_close_pipe_fds 101646
+ms_gen_profiler.py:11:main;subprocess.py:732:__init__;subprocess.py:1550:_execute_child;subprocess.py:1097:_close_pipe_fds;contextlib.py:429:callback 44288
+ms_gen_profiler.py:11:main;subprocess.py:732:__init__;subprocess.py:1550:_execute_child;~:0:<built-in method _posixsubprocess.fork_exec> 497025
+ms_gen_profiler.py:11:main;subprocess.py:732:__init__;subprocess.py:1550:_execute_child;~:0:<built-in method posix.read> 1019940
+ms_gen_profiler.py:11:main;subprocess.py:732:__init__;~:0:<built-in method io.open> 49058
+ms_gen_profiler.py:11:main;subprocess.py:980:communicate 32698
+ms_gen_profiler.py:11:main;subprocess.py:980:communicate;subprocess.py:1074:wait 40681
+ms_gen_profiler.py:11:main;subprocess.py:980:communicate;~:0:<method 'read' of '_io.BufferedReader' objects> 19649194
+ms_gen_profiler.py:11:main;~:0:<built-in method io.open> 5915530
+ms_gen_profiler.py:11:main;~:0:<method 'choice' of 'numpy.random.mtrand.RandomState' objects> 205443
+ms_gen_profiler.py:11:main;~:0:<method 'split' of 'str' objects> 245269
+ms_gen_profiler.py:11:main;~:0:<method 'writerow' of '_csv.writer' objects> 7440379

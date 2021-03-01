@@ -135,5 +135,14 @@ def train(gpu, args):
         
 # Call main function
 if __name__ == '__main__':
+    import cProfile, pstats
+    profiler = cProfile.Profile()
+    profiler.enable()
     main()
+    profiler.disable()
+    stats = pstats.Stats(profiler)
+    stats.strip_dirs()
+    stats.sort_stats('ncalls')
+    stats.print_stats()
+    stats.dump_stats('./profiler/CNN_ddp.prof')
                  

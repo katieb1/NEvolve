@@ -4,6 +4,7 @@ import math
 import collections
 import random
 import csv
+import numpy as np
 
 # port of ms paramter gen script from R
 
@@ -26,17 +27,22 @@ mspar['ne0_rand'] = [1*random.randint(500,500000) for i in range(sims)] # genera
 mspar['ne1_rand'] = [1*(-0.3 + (random.random()*(0.6-0.05))) for i in range(sims)] # generate random amount to perturb pop multiplier (time 1)
 mspar['ne2_rand'] = [1*(-0.3 + (random.random()*(0.6-0.05))) for i in range(sims)] # generate random amount to perturb pop multiplier (time 2)
 
+temp = {'num_sims':sims ,
+        'num_indivs': mspar['indvs'],
+        'num_sites': mspar['snps']}
+np.save("lookup.npy", temp)
+
 ## Scenario generator (loop)
 # parameter csv file structure
 # batch#, filename, ne0, ne1, ne2, label
 
-with open('./cnn_batched/ms_param.csv', 'w') as csvfile:
+with open('ms_param.csv', 'w') as csvfile:
     csvwr = csv.writer(csvfile, delimiter=',') # open parameter file csv writer
     csvwr.writerow(["batch","filename","ne0","ne1","ne2","labels"]) # write parameter csv header
     countb = 0 # set batch counter to 0
     for q in sim_seq: # for loop for all batches
       countb += 1 #add one to batch counter
-      fn = "./cnn_batched/msb_{:06}.msout".format(countb) # create file name for this batch (06 allows for up to 1 million names with fixed width--i.e., 32 million sims)
+      fn = "msb_{:06}.msout".format(countb) # create file name for this batch (06 allows for up to 1 million names with fixed width--i.e., 32 million sims)
       with open(fn,"w") as csvsimf: # open batch file for ouput
         csvsim = csv.writer(csvsimf, delimiter=',') # open batch file writer
         for z in range(32): #run through sim generation for all sims in batch

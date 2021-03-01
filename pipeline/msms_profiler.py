@@ -141,10 +141,10 @@ def main():
     # Note that msms.py has many other imports
     import msms
     import torch
-
+    print("Reading data")
     # Initialize a dataset
     example_set = msms.Dataset("data", "metadata/lookup.npy", "metadata/ms_param.csv")
-
+    print("Initializing dataloader")
     # Initialize a dataloader with the dataset
     # - Note that you currently can't add more `num_workers`, maybe due to fighting over GPU resources?
     example_loader = torch.utils.data.DataLoader(example_set, batch_size = 2, shuffle = True, num_workers = 0)
@@ -158,10 +158,10 @@ def main():
     kernels = [5, 4, 3]
     # The nodes in each hidden fully connected layer. The last should be the number of labels. The length of the list is independent of the other lists.
     nodes = [500, 100, 5]
-
+    print("Creating neural network")
     # Create the network with the given parameters and send it to the gpu
     example_net = msms.Net(example_set.num_indivs, example_set.num_sites, pool_size, channels, kernels, nodes).cuda()
-
+    print("Training neural network")
     # Try running the network
     for snp, pos, label in example_loader:
         # The data loader reads in each file as though it were a training example

@@ -54,12 +54,15 @@ def train(gpu, args):
     
     # Calculate GPU rank
     rank = args.nr * args.gpus + gpu
+    print(f"GPU: {gpu}")
     dist.init_process_group(
         backend='nccl',
                 init_method='env://',
         world_size=args.world_size,
         rank=rank
     )
+    
+    torch.cuda.set_device(gpu)
     
     # Initialize dataset
     ds = msms.Dataset(args.data, args.metadata, args.params)
@@ -76,7 +79,8 @@ def train(gpu, args):
                                              batch_size=args.batch_size,
                                              shuffle=False, # NO SHUFFLE
                                              num_workers=0,
-                                             sampler=ds_sampler)
+                                             sampler=ds_sampler,
+                                             pin_memory=True)
     
     # Set network parameters
     pool_size = args.pool_size
@@ -91,6 +95,7 @@ def train(gpu, args):
                                               device_ids=[gpu])
     
     # Define criterion and optimizer functions
+    criterion = torch.nn.CrossEntropyLoss()
     optimizer = torch.optim.SGD(net.parameters(), 1e-4)
     total_step = len(dataloader)
     
@@ -106,15 +111,15 @@ def train(gpu, args):
             pos = pos.view(-1, ds.num_sites)
             print(f"label shape before reshape: {label.shape}")
             label = label.view(-1)
-            label_ohe = F.one_hot(label)
-            label_ohe = label_ohe.to(torch.float32)
+            #label_ohe = F.one_hot(label)
+            #label_ohe = label_ohe.to(torch.float32)
 
             # Perform one forward pass
             out = net(snp, pos)
             out = out.to(torch.float32)
             print(f"net output shape: {out.shape}")
             print(f"label tensor shpe: {label.shape}")
-            loss = F.mse_loss(out, label_ohe).cuda()
+            loss = criterion(out, label).cuda()
             
             # Perform backward pass
             optimizer.zero_grad()

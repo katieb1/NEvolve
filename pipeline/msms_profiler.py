@@ -189,4 +189,4 @@ if __name__ == '__main__':
     stats.strip_dirs()
     stats.sort_stats('ncalls')
     stats.print_stats()
-    stats.dump_stats('./profiler/stats.prof')
+    stats.dump_stats('./profiler/update_stats2.prof')

@@ -1,0 +1,7 @@
+CNN_ddp.py:23:main 2092
+CNN_ddp.py:23:main;spawn.py:161:spawn 837
+CNN_ddp.py:23:main;spawn.py:161:spawn;spawn.py:136:start_processes 39487
+CNN_ddp.py:23:main;spawn.py:161:spawn;spawn.py:136:start_processes;spawn.py:57:join 1825
+CNN_ddp.py:23:main;spawn.py:161:spawn;spawn.py:136:start_processes;spawn.py:57:join;connection.py:907:wait 285
+CNN_ddp.py:23:main;spawn.py:161:spawn;spawn.py:136:start_processes;spawn.py:57:join;connection.py:907:wait;selectors.py:402:select 66
+CNN_ddp.py:23:main;spawn.py:161:spawn;spawn.py:136:start_processes;spawn.py:57:join;connection.py:907:wait;selectors.py:402:select;~:0:<method 'poll' of 'select.poll' objects> 43763144

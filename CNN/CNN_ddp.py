@@ -40,7 +40,7 @@ def main():
     parser.add_argument('--no_labels', default=5, type=int)
     args = parser.parse_args()
     args.world_size = args.gpus * args.nodes
-    os.environ['MASTER_ADDR'] = '172.19.146.54'             
+    os.environ['MASTER_ADDR'] = os.uname()[1]             
     os.environ['MASTER_PORT'] = '8888'
     mp.spawn(train, nprocs=args.gpus, args=(args,))
 
@@ -79,8 +79,7 @@ def train(gpu, args):
                                              batch_size=args.batch_size,
                                              shuffle=False, # NO SHUFFLE
                                              num_workers=0,
-                                             sampler=ds_sampler,
-                                             pin_memory=True)
+                                             sampler=ds_sampler)
     
     # Set network parameters
     pool_size = args.pool_size

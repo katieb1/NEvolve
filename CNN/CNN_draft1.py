@@ -82,8 +82,7 @@ def main():
     toc = time.perf_counter()
     print(f"Total time run: {(toc-tic)/60:0.4f} minutes")
 
-if __name__ == '__main__:
-    if __name__ == '__main__':
+if __name__ == '__main__':
     import cProfile, pstats
     profiler = cProfile.Profile()
     profiler.enable()

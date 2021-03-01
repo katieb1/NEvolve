@@ -45,7 +45,7 @@ def main():
     total_step = len(dataloader)
     
     # Extract info from dataloader and run network
-    for epoch in range(args.epochs):
+    for epoch in range(2):
         count = 0
         for snp, pos, label in dataloader:
             count += 1
@@ -73,7 +73,7 @@ def main():
             if (count) % 100 == 0 and gpu == 0:
                 print('Epoch [{}/{}], Step [{}/{}], Loss: {:.4f}'.format(
                     epoch + 1,
-                    args.epochs,
+                    2,
                     count,
                     total_step,
                     loss.item())

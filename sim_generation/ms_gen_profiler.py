@@ -100,6 +100,6 @@ if __name__ == '__main__':
     profiler.disable()
     stats = pstats.Stats(profiler)
     stats.strip_dirs()
-    stats.sort_stats('ncalls')
+    stats.sort_stats('tottime')
     stats.print_stats()
     stats.dump_stats('./profiler/stats.prof')

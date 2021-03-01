@@ -12,17 +12,16 @@ import torch.optim as optim
 import os
 import argparse
 import torch.multiprocessing as mp
-import torch
 import torch.nn as nn
 import torch.distributed as dist
-import DistributedDataParallel as DDP
+#import DistributedDataParallel as DDP
 
 # Custom data loader function
 import msms
 
 # Define main function to parse arguments for training function
 def main():
-    parser.add_argument.ArgumentParser()
+    parser = argparse.ArgumentParser()
     parser.add_argument('-n', '--nodes', default=1, type=int, metavar='N')
     parser.add_argument('-g', '--gpus', default=1, type=int,
                         help='number of gpus per node')
@@ -30,15 +29,19 @@ def main():
                         help='ranking within the nodes')
     parser.add_argument('--epochs', default=2, type=int, metavar='N',
                         help='number of total epochs to run')
-    parser.add_argument('--data', default="data", type=str,
+    parser.add_argument('--data', default="../pipeline/data", type=str,
                         help='filepath to data')
-    parser.add_argument('--metadata', default="metadata/lookup.npy",
+    parser.add_argument('--metadata', default="../pipeline/metadata/lookup.npy",
                         type=str, help='path to metadata')
+    parser.add_argument('--params', default="../pipeline/metadata/ms_param.csv",
+                        type=str, help='path to params file')
     parser.add_argument('--batch_size', default=20, type=int)
     parser.add_argument('--pool_size', default=1, type=int)
     parser.add_argument('--no_labels', default=5, type=int)
     args = parser.parse_args()
     args.world_size = args.gpus * args.nodes
+    os.environ['MASTER_ADDR'] = '172.19.146.54'             
+    os.environ['MASTER_PORT'] = '8888'
     mp.spawn(train, nprocs=args.gpus, args=(args,))
 
 # Neural network AND data loader defined in msms.py
@@ -59,7 +62,7 @@ def train(gpu, args):
     )
     
     # Initialize dataset
-    ds = msms.Dataset(args.data, args.metadata)
+    ds = msms.Dataset(args.data, args.metadata, args.params)
     
     # Create a training sampler for DDP
     ds_sampler = torch.utils.data.distributed.DistributedSampler(
@@ -88,7 +91,6 @@ def train(gpu, args):
                                               device_ids=[gpu])
     
     # Define criterion and optimizer functions
-    criterion = F.mse_loss().cuda()
     optimizer = torch.optim.SGD(net.parameters(), 1e-4)
     total_step = len(dataloader)
     
@@ -102,12 +104,18 @@ def train(gpu, args):
             snp = snp.view(-1, ds.num_indivs,
                            ds.num_sites).unsqueeze(1)
             pos = pos.view(-1, ds.num_sites)
+            print(f"label shape before reshape: {label.shape}")
             label = label.view(-1)
+            label_ohe = F.one_hot(label)
+            label_ohe = label_ohe.to(torch.float32)
 
             # Perform one forward pass
             out = net(snp, pos)
-            loss = criterion(out, label)
-
+            out = out.to(torch.float32)
+            print(f"net output shape: {out.shape}")
+            print(f"label tensor shpe: {label.shape}")
+            loss = F.mse_loss(out, label_ohe).cuda()
+            
             # Perform backward pass
             optimizer.zero_grad()
             loss.backward()

@@ -82,7 +82,7 @@ def train(gpu, args):
     # Initialize dataset
     train_set = msms.Dataset(args.data, args.metadata, args.params, train_ids)
     dev_set = msms.Dataset(args.data, args.metadata, args.params, dev_ids)
-    
+
     # Create a training sampler for DDP
     train_sampler = torch.utils.data.distributed.DistributedSampler(
         train_set,
@@ -117,8 +117,8 @@ def train(gpu, args):
     nodes = [500, 100]
 
     # Create model and wrap in DDP
-    net = msms.Net(train_set.num_indivs, train_set.num_sites, pools,
-                   channels, kernels, nodes, train_set.num_labels).cuda()
+    net = msms.Net(train_set.num_indivs, train_set.num_sites,
+                   channels, kernels, pools, nodes, train_set.num_labels).cuda()
     net = nn.parallel.DistributedDataParallel(net,
                                               device_ids=[gpu])
     
@@ -127,7 +127,8 @@ def train(gpu, args):
     
     # Initialize overall loss accumulator
     losses = []
-    
+    report_every = args.report_every
+
     # Extract info from dataloader and run network
     for epoch in range(args.epochs):
         

@@ -74,7 +74,7 @@ def train(gpu, args):
 
     # Decide on train / dev split
     lookup = np.load(args.metadata, allow_pickle = True).item()
-    num_dev = min(np.floor(lookup['num_files'] * args.test_prop), 2**5)
+    num_dev = np.int(min(np.floor(lookup['num_files'] * args.test_prop), 2**5))
     shuffled_ids = np.random.choice(range(lookup['num_files']), lookup['num_files'], replace = False)
     train_ids = shuffled_ids[:-num_dev]
     dev_ids = shuffled_ids[-num_dev:]
@@ -117,14 +117,13 @@ def train(gpu, args):
     nodes = [500, 100]
 
     # Create model and wrap in DDP
-    net = msms.Net(ds.num_indivs, ds.num_sites, ds.pools,
-                   channels, kernels, nodes, ds.num_labels).cuda()
+    net = msms.Net(train_set.num_indivs, train_set.num_sites, pools,
+                   channels, kernels, nodes, train_set.num_labels).cuda()
     net = nn.parallel.DistributedDataParallel(net,
                                               device_ids=[gpu])
     
-    # Define criterion and optimizer functions
+    # Define criterion functions
     criterion = torch.nn.CrossEntropyLoss()
-    optimizer = torch.optim.SGD(net.parameters(), 1e-4)
     
     # Initialize overall loss accumulator
     losses = []

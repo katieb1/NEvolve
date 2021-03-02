@@ -1,0 +1,1176 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" width="1200" height="342" onload="init(evt)" viewBox="0 0 1200 342" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<!-- Flame graph stack visualization. See https://github.com/brendangregg/FlameGraph for latest version, and http://www.brendangregg.com/flamegraphs.html for examples. -->
+<!-- NOTES:  -->
+<defs>
+	<linearGradient id="background" y1="0" y2="1" x1="0" x2="0" >
+		<stop stop-color="#eeeeee" offset="5%" />
+		<stop stop-color="#eeeeb0" offset="95%" />
+	</linearGradient>
+</defs>
+<style type="text/css">
+	text { font-family:Verdana; font-size:12px; fill:rgb(0,0,0); }
+	#search, #ignorecase { opacity:0.1; cursor:pointer; }
+	#search:hover, #search.show, #ignorecase:hover, #ignorecase.show { opacity:1; }
+	#subtitle { text-anchor:middle; font-color:rgb(160,160,160); }
+	#title { text-anchor:middle; font-size:17px}
+	#unzoom { cursor:pointer; }
+	#frames > *:hover { stroke:black; stroke-width:0.5; cursor:pointer; }
+	.hide { display:none; }
+	.parent { opacity:0.5; }
+</style>
+<script type="text/ecmascript">
+<![CDATA[
+	"use strict";
+	var details, searchbtn, unzoombtn, matchedtxt, svg, searching, currentSearchTerm, ignorecase, ignorecaseBtn;
+	function init(evt) {
+		details = document.getElementById("details").firstChild;
+		searchbtn = document.getElementById("search");
+		ignorecaseBtn = document.getElementById("ignorecase");
+		unzoombtn = document.getElementById("unzoom");
+		matchedtxt = document.getElementById("matched");
+		svg = document.getElementsByTagName("svg")[0];
+		searching = 0;
+		currentSearchTerm = null;
+	}
+
+	window.addEventListener("click", function(e) {
+		var target = find_group(e.target);
+		if (target) {
+			if (target.nodeName == "a") {
+				if (e.ctrlKey === false) return;
+				e.preventDefault();
+			}
+			if (target.classList.contains("parent")) unzoom();
+			zoom(target);
+		}
+		else if (e.target.id == "unzoom") unzoom();
+		else if (e.target.id == "search") search_prompt();
+		else if (e.target.id == "ignorecase") toggle_ignorecase();
+	}, false)
+
+	// mouse-over for info
+	// show
+	window.addEventListener("mouseover", function(e) {
+		var target = find_group(e.target);
+		if (target) details.nodeValue = "Function: " + g_to_text(target);
+	}, false)
+
+	// clear
+	window.addEventListener("mouseout", function(e) {
+		var target = find_group(e.target);
+		if (target) details.nodeValue = ' ';
+	}, false)
+
+	// ctrl-F for search
+	window.addEventListener("keydown",function (e) {
+		if (e.keyCode === 114 || (e.ctrlKey && e.keyCode === 70)) {
+			e.preventDefault();
+			search_prompt();
+		}
+	}, false)
+
+	// ctrl-I to toggle case-sensitive search
+	window.addEventListener("keydown",function (e) {
+		if (e.ctrlKey && e.keyCode === 73) {
+			e.preventDefault();
+			toggle_ignorecase();
+		}
+	}, false)
+
+	// functions
+	function find_child(node, selector) {
+		var children = node.querySelectorAll(selector);
+		if (children.length) return children[0];
+		return;
+	}
+	function find_group(node) {
+		var parent = node.parentElement;
+		if (!parent) return;
+		if (parent.id == "frames") return node;
+		return find_group(parent);
+	}
+	function orig_save(e, attr, val) {
+		if (e.attributes["_orig_" + attr] != undefined) return;
+		if (e.attributes[attr] == undefined) return;
+		if (val == undefined) val = e.attributes[attr].value;
+		e.setAttribute("_orig_" + attr, val);
+	}
+	function orig_load(e, attr) {
+		if (e.attributes["_orig_"+attr] == undefined) return;
+		e.attributes[attr].value = e.attributes["_orig_" + attr].value;
+		e.removeAttribute("_orig_"+attr);
+	}
+	function g_to_text(e) {
+		var text = find_child(e, "title").firstChild.nodeValue;
+		return (text)
+	}
+	function g_to_func(e) {
+		var func = g_to_text(e);
+		// if there's any manipulation we want to do to the function
+		// name before it's searched, do it here before returning.
+		return (func);
+	}
+	function update_text(e) {
+		var r = find_child(e, "rect");
+		var t = find_child(e, "text");
+		var w = parseFloat(r.attributes.width.value) -3;
+		var txt = find_child(e, "title").textContent.replace(/\([^(]*\)$/,"");
+		t.attributes.x.value = parseFloat(r.attributes.x.value) + 3;
+
+		// Smaller than this size won't fit anything
+		if (w < 2 * 12 * 0.59) {
+			t.textContent = "";
+			return;
+		}
+
+		t.textContent = txt;
+		// Fit in full text width
+		if (/^ *$/.test(txt) || t.getSubStringLength(0, txt.length) < w)
+			return;
+
+		for (var x = txt.length - 2; x > 0; x--) {
+			if (t.getSubStringLength(0, x + 2) <= w) {
+				t.textContent = txt.substring(0, x) + "..";
+				return;
+			}
+		}
+		t.textContent = "";
+	}
+
+	// zoom
+	function zoom_reset(e) {
+		if (e.attributes != undefined) {
+			orig_load(e, "x");
+			orig_load(e, "width");
+		}
+		if (e.childNodes == undefined) return;
+		for (var i = 0, c = e.childNodes; i < c.length; i++) {
+			zoom_reset(c[i]);
+		}
+	}
+	function zoom_child(e, x, ratio) {
+		if (e.attributes != undefined) {
+			if (e.attributes.x != undefined) {
+				orig_save(e, "x");
+				e.attributes.x.value = (parseFloat(e.attributes.x.value) - x - 10) * ratio + 10;
+				if (e.tagName == "text")
+					e.attributes.x.value = find_child(e.parentNode, "rect[x]").attributes.x.value + 3;
+			}
+			if (e.attributes.width != undefined) {
+				orig_save(e, "width");
+				e.attributes.width.value = parseFloat(e.attributes.width.value) * ratio;
+			}
+		}
+
+		if (e.childNodes == undefined) return;
+		for (var i = 0, c = e.childNodes; i < c.length; i++) {
+			zoom_child(c[i], x - 10, ratio);
+		}
+	}
+	function zoom_parent(e) {
+		if (e.attributes) {
+			if (e.attributes.x != undefined) {
+				orig_save(e, "x");
+				e.attributes.x.value = 10;
+			}
+			if (e.attributes.width != undefined) {
+				orig_save(e, "width");
+				e.attributes.width.value = parseInt(svg.width.baseVal.value) - (10 * 2);
+			}
+		}
+		if (e.childNodes == undefined) return;
+		for (var i = 0, c = e.childNodes; i < c.length; i++) {
+			zoom_parent(c[i]);
+		}
+	}
+	function zoom(node) {
+		var attr = find_child(node, "rect").attributes;
+		var width = parseFloat(attr.width.value);
+		var xmin = parseFloat(attr.x.value);
+		var xmax = parseFloat(xmin + width);
+		var ymin = parseFloat(attr.y.value);
+		var ratio = (svg.width.baseVal.value - 2 * 10) / width;
+
+		// XXX: Workaround for JavaScript float issues (fix me)
+		var fudge = 0.0001;
+
+		unzoombtn.classList.remove("hide");
+
+		var el = document.getElementById("frames").children;
+		for (var i = 0; i < el.length; i++) {
+			var e = el[i];
+			var a = find_child(e, "rect").attributes;
+			var ex = parseFloat(a.x.value);
+			var ew = parseFloat(a.width.value);
+			var upstack;
+			// Is it an ancestor
+			if (0 == 0) {
+				upstack = parseFloat(a.y.value) > ymin;
+			} else {
+				upstack = parseFloat(a.y.value) < ymin;
+			}
+			if (upstack) {
+				// Direct ancestor
+				if (ex <= xmin && (ex+ew+fudge) >= xmax) {
+					e.classList.add("parent");
+					zoom_parent(e);
+					update_text(e);
+				}
+				// not in current path
+				else
+					e.classList.add("hide");
+			}
+			// Children maybe
+			else {
+				// no common path
+				if (ex < xmin || ex + fudge >= xmax) {
+					e.classList.add("hide");
+				}
+				else {
+					zoom_child(e, xmin, ratio);
+					update_text(e);
+				}
+			}
+		}
+		search();
+	}
+	function unzoom() {
+		unzoombtn.classList.add("hide");
+		var el = document.getElementById("frames").children;
+		for(var i = 0; i < el.length; i++) {
+			el[i].classList.remove("parent");
+			el[i].classList.remove("hide");
+			zoom_reset(el[i]);
+			update_text(el[i]);
+		}
+		search();
+	}
+
+	// search
+	function toggle_ignorecase() {
+		ignorecase = !ignorecase;
+		if (ignorecase) {
+			ignorecaseBtn.classList.add("show");
+		} else {
+			ignorecaseBtn.classList.remove("show");
+		}
+		reset_search();
+		search();
+	}
+	function reset_search() {
+		var el = document.querySelectorAll("#frames rect");
+		for (var i = 0; i < el.length; i++) {
+			orig_load(el[i], "fill")
+		}
+	}
+	function search_prompt() {
+		if (!searching) {
+			var term = prompt("Enter a search term (regexp " +
+			    "allowed, eg: ^ext4_)"
+			    + (ignorecase ? ", ignoring case" : "")
+			    + "\nPress Ctrl-i to toggle case sensitivity", "");
+			if (term != null) {
+				currentSearchTerm = term;
+				search();
+			}
+		} else {
+			reset_search();
+			searching = 0;
+			currentSearchTerm = null;
+			searchbtn.classList.remove("show");
+			searchbtn.firstChild.nodeValue = "Search"
+			matchedtxt.classList.add("hide");
+			matchedtxt.firstChild.nodeValue = ""
+		}
+	}
+	function search(term) {
+		if (currentSearchTerm === null) return;
+		var term = currentSearchTerm;
+
+		var re = new RegExp(term, ignorecase ? 'i' : '');
+		var el = document.getElementById("frames").children;
+		var matches = new Object();
+		var maxwidth = 0;
+		for (var i = 0; i < el.length; i++) {
+			var e = el[i];
+			var func = g_to_func(e);
+			var rect = find_child(e, "rect");
+			if (func == null || rect == null)
+				continue;
+
+			// Save max width. Only works as we have a root frame
+			var w = parseFloat(rect.attributes.width.value);
+			if (w > maxwidth)
+				maxwidth = w;
+
+			if (func.match(re)) {
+				// highlight
+				var x = parseFloat(rect.attributes.x.value);
+				orig_save(rect, "fill");
+				rect.attributes.fill.value = "rgb(230,0,230)";
+
+				// remember matches
+				if (matches[x] == undefined) {
+					matches[x] = w;
+				} else {
+					if (w > matches[x]) {
+						// overwrite with parent
+						matches[x] = w;
+					}
+				}
+				searching = 1;
+			}
+		}
+		if (!searching)
+			return;
+
+		searchbtn.classList.add("show");
+		searchbtn.firstChild.nodeValue = "Reset Search";
+
+		// calculate percent matched, excluding vertical overlap
+		var count = 0;
+		var lastx = -1;
+		var lastw = 0;
+		var keys = Array();
+		for (k in matches) {
+			if (matches.hasOwnProperty(k))
+				keys.push(k);
+		}
+		// sort the matched frames by their x location
+		// ascending, then width descending
+		keys.sort(function(a, b){
+			return a - b;
+		});
+		// Step through frames saving only the biggest bottom-up frames
+		// thanks to the sort order. This relies on the tree property
+		// where children are always smaller than their parents.
+		var fudge = 0.0001;	// JavaScript floating point
+		for (var k in keys) {
+			var x = parseFloat(keys[k]);
+			var w = matches[keys[k]];
+			if (x >= lastx + lastw - fudge) {
+				count += w;
+				lastx = x;
+				lastw = w;
+			}
+		}
+		// display matched percent
+		matchedtxt.classList.remove("hide");
+		var pct = 100 * count / maxwidth;
+		if (pct != 100) pct = pct.toFixed(1)
+		matchedtxt.firstChild.nodeValue = "Matched: " + pct + "%";
+	}
+]]>
+</script>
+<rect x="0.0" y="0" width="1200.0" height="342.0" fill="url(#background)"  />
+<text id="title" x="600.00" y="24" >Flame Graph</text>
+<text id="details" x="10.00" y="325" > </text>
+<text id="unzoom" x="10.00" y="24" class="hide">Reset Zoom</text>
+<text id="search" x="1090.00" y="24" >Search</text>
+<text id="ignorecase" x="1174.00" y="24" >ic</text>
+<text id="matched" x="1090.00" y="325" > </text>
+<g id="frames">
+<g >
+<title>__init__.py:68:backward (312,335 samples, 0.37%)</title><rect x="1185.7" y="245" width="4.3" height="15.0" fill="rgb(205,173,26)" rx="2" ry="2" />
+<text  x="1188.67" y="255.5" ></text>
+</g>
+<g >
+<title>buffer.py:15:__init__ (234,335 samples, 0.28%)</title><rect x="980.7" y="101" width="3.3" height="15.0" fill="rgb(209,201,49)" rx="2" ry="2" />
+<text  x="983.72" y="111.5" ></text>
+</g>
+<g >
+<title>~:0:&lt;built-in method builtins.isinstance&gt; (119,663 samples, 0.14%)</title><rect x="750.2" y="53" width="1.7" height="15.0" fill="rgb(217,117,49)" rx="2" ry="2" />
+<text  x="753.24" y="63.5" ></text>
+</g>
+<g >
+<title>frame.py:507:_gather (2,375,992 samples, 2.79%)</title><rect x="995.6" y="117" width="32.9" height="15.0" fill="rgb(205,17,16)" rx="2" ry="2" />
+<text  x="998.63" y="127.5" >fr..</text>
+</g>
+<g >
+<title>contextlib.py:71:inner (782,578 samples, 0.92%)</title><rect x="623.4" y="117" width="10.8" height="15.0" fill="rgb(227,70,33)" rx="2" ry="2" />
+<text  x="626.38" y="127.5" ></text>
+</g>
+<g >
+<title>buffer.py:15:__init__ (363,693 samples, 0.43%)</title><rect x="1015.0" y="85" width="5.0" height="15.0" fill="rgb(223,120,40)" rx="2" ry="2" />
+<text  x="1017.97" y="95.5" ></text>
+</g>
+<g >
+<title>column_accessor.py:16:__init__ (723,637 samples, 0.85%)</title><rect x="777.5" y="85" width="10.0" height="15.0" fill="rgb(223,122,24)" rx="2" ry="2" />
+<text  x="780.46" y="95.5" ></text>
+</g>
+<g >
+<title>utils.py:287:__setitem__ (87,327 samples, 0.10%)</title><rect x="1127.4" y="197" width="1.2" height="15.0" fill="rgb(235,4,9)" rx="2" ry="2" />
+<text  x="1130.41" y="207.5" ></text>
+</g>
+<g >
+<title>contextlib.py:71:inner (6,974,702 samples, 8.19%)</title><rect x="1050.3" y="245" width="96.6" height="15.0" fill="rgb(215,11,4)" rx="2" ry="2" />
+<text  x="1053.33" y="255.5" >contextlib...</text>
+</g>
+<g >
+<title>msms.py:112:read_file (73,378,481 samples, 86.15%)</title><rect x="18.6" y="181" width="1016.6" height="15.0" fill="rgb(238,180,15)" rx="2" ry="2" />
+<text  x="21.64" y="191.5" >msms.py:112:read_file</text>
+</g>
+<g >
+<title>utils.py:287:__setitem__ (94,305 samples, 0.11%)</title><rect x="987.8" y="85" width="1.3" height="15.0" fill="rgb(251,100,31)" rx="2" ry="2" />
+<text  x="990.79" y="95.5" ></text>
+</g>
+<g >
+<title>~:0:&lt;cudf._lib.copying.gather&gt; (991,846 samples, 1.16%)</title><rect x="1130.2" y="197" width="13.7" height="15.0" fill="rgb(230,40,47)" rx="2" ry="2" />
+<text  x="1133.15" y="207.5" ></text>
+</g>
+<g >
+<title>column_accessor.py:128:to_pandas_index (104,182 samples, 0.12%)</title><rect x="635.5" y="133" width="1.5" height="15.0" fill="rgb(253,122,24)" rx="2" ry="2" />
+<text  x="638.51" y="143.5" ></text>
+</g>
+<g >
+<title>indexing.py:166:__getitem__ (15,110,684 samples, 17.74%)</title><rect x="825.8" y="165" width="209.4" height="15.0" fill="rgb(206,42,47)" rx="2" ry="2" />
+<text  x="828.83" y="175.5" >indexing.py:166:__getitem__</text>
+</g>
+<g >
+<title>utils.py:273:__get__ (115,479 samples, 0.14%)</title><rect x="765.4" y="101" width="1.6" height="15.0" fill="rgb(234,146,30)" rx="2" ry="2" />
+<text  x="768.43" y="111.5" ></text>
+</g>
+<g >
+<title>~:0:&lt;cudf._lib.csv.read_csv&gt; (604,973 samples, 0.71%)</title><rect x="623.8" y="85" width="8.4" height="15.0" fill="rgb(241,203,48)" rx="2" ry="2" />
+<text  x="626.79" y="95.5" ></text>
+</g>
+<g >
+<title>module.py:357:_apply (146,141 samples, 0.17%)</title><rect x="1039.4" y="229" width="2.0" height="15.0" fill="rgb(231,84,54)" rx="2" ry="2" />
+<text  x="1042.37" y="239.5" ></text>
+</g>
+<g >
+<title>utils.py:287:__setitem__ (189,072 samples, 0.22%)</title><rect x="992.9" y="101" width="2.6" height="15.0" fill="rgb(213,77,52)" rx="2" ry="2" />
+<text  x="995.86" y="111.5" ></text>
+</g>
+<g >
+<title>column_accessor.py:16:__init__ (721,438 samples, 0.85%)</title><rect x="747.4" y="101" width="10.0" height="15.0" fill="rgb(231,102,8)" rx="2" ry="2" />
+<text  x="750.39" y="111.5" ></text>
+</g>
+<g >
+<title>msms.py:54:__init__ (2,795,302 samples, 3.28%)</title><rect x="1146.9" y="261" width="38.8" height="15.0" fill="rgb(208,27,36)" rx="2" ry="2" />
+<text  x="1149.95" y="271.5" >msm..</text>
+</g>
+<g >
+<title>dtypes.py:172:is_categorical_dtype (273,515 samples, 0.32%)</title><rect x="808.6" y="117" width="3.8" height="15.0" fill="rgb(240,215,51)" rx="2" ry="2" />
+<text  x="811.60" y="127.5" ></text>
+</g>
+<g >
+<title>utils.py:273:__get__ (129,401 samples, 0.15%)</title><rect x="824.0" y="117" width="1.8" height="15.0" fill="rgb(214,31,14)" rx="2" ry="2" />
+<text  x="827.04" y="127.5" ></text>
+</g>
+<g >
+<title>~:0:&lt;built-in method builtins.hasattr&gt; (94,022 samples, 0.11%)</title><rect x="601.3" y="101" width="1.3" height="15.0" fill="rgb(220,123,6)" rx="2" ry="2" />
+<text  x="604.34" y="111.5" ></text>
+</g>
+<g >
+<title>CNN_draft1.py:17:main (85,179,835 samples, 100.00%)</title><rect x="10.0" y="277" width="1180.0" height="15.0" fill="rgb(219,209,12)" rx="2" ry="2" />
+<text  x="13.00" y="287.5" >CNN_draft1.py:17:main</text>
+</g>
+<g >
+<title>frame.py:2208:_postprocess_columns (104,156 samples, 0.12%)</title><rect x="1128.7" y="197" width="1.5" height="15.0" fill="rgb(219,126,11)" rx="2" ry="2" />
+<text  x="1131.71" y="207.5" ></text>
+</g>
+<g >
+<title>buffer.py:83:_init_from_array_like (147,983 samples, 0.17%)</title><rect x="981.9" y="85" width="2.1" height="15.0" fill="rgb(217,61,20)" rx="2" ry="2" />
+<text  x="984.92" y="95.5" ></text>
+</g>
+<g >
+<title>utils.py:298:__setitem__ (400,551 samples, 0.47%)</title><rect x="641.8" y="101" width="5.6" height="15.0" fill="rgb(211,64,47)" rx="2" ry="2" />
+<text  x="644.84" y="111.5" ></text>
+</g>
+<g >
+<title>~:0:&lt;built-in method conv2d&gt; (124,401 samples, 0.15%)</title><rect x="1047.9" y="181" width="1.7" height="15.0" fill="rgb(237,192,31)" rx="2" ry="2" />
+<text  x="1050.90" y="191.5" ></text>
+</g>
+<g >
+<title>dtypes.py:172:is_categorical_dtype (109,308 samples, 0.13%)</title><rect x="733.6" y="85" width="1.5" height="15.0" fill="rgb(208,123,30)" rx="2" ry="2" />
+<text  x="736.59" y="95.5" ></text>
+</g>
+<g >
+<title>msms.py:89:&lt;genexpr&gt; (2,791,279 samples, 3.28%)</title><rect x="1147.0" y="197" width="38.7" height="15.0" fill="rgb(208,220,16)" rx="2" ry="2" />
+<text  x="1150.00" y="207.5" >msm..</text>
+</g>
+<g >
+<title>container.py:145:__init__ (2,794,784 samples, 3.28%)</title><rect x="1147.0" y="245" width="38.7" height="15.0" fill="rgb(227,76,7)" rx="2" ry="2" />
+<text  x="1149.95" y="255.5" >con..</text>
+</g>
+<g >
+<title>_collections_abc.py:760:__iter__ (90,838 samples, 0.11%)</title><rect x="824.6" y="85" width="1.2" height="15.0" fill="rgb(247,198,39)" rx="2" ry="2" />
+<text  x="827.57" y="95.5" ></text>
+</g>
+<g >
+<title>~:0:&lt;built-in method builtins.isinstance&gt; (119,916 samples, 0.14%)</title><rect x="780.3" y="37" width="1.7" height="15.0" fill="rgb(213,214,47)" rx="2" ry="2" />
+<text  x="783.33" y="47.5" ></text>
+</g>
+<g >
+<title>indexing.py:453:_get_column_selection (477,759 samples, 0.56%)</title><rect x="1028.5" y="117" width="6.7" height="15.0" fill="rgb(232,38,38)" rx="2" ry="2" />
+<text  x="1031.54" y="127.5" ></text>
+</g>
+<g >
+<title>column.py:1401:build_column (269,196 samples, 0.32%)</title><rect x="984.0" y="101" width="3.7" height="15.0" fill="rgb(213,78,43)" rx="2" ry="2" />
+<text  x="986.97" y="111.5" ></text>
+</g>
+<g >
+<title>column.py:48:__init__ (245,541 samples, 0.29%)</title><rect x="614.4" y="85" width="3.4" height="15.0" fill="rgb(213,218,47)" rx="2" ry="2" />
+<text  x="617.41" y="95.5" ></text>
+</g>
+<g >
+<title>column.py:1401:build_column (192,529 samples, 0.23%)</title><rect x="1139.9" y="181" width="2.7" height="15.0" fill="rgb(217,45,2)" rx="2" ry="2" />
+<text  x="1142.95" y="191.5" ></text>
+</g>
+<g >
+<title>column.py:1537:as_column (168,227 samples, 0.20%)</title><rect x="779.7" y="53" width="2.3" height="15.0" fill="rgb(223,85,23)" rx="2" ry="2" />
+<text  x="782.66" y="63.5" ></text>
+</g>
+<g >
+<title>frame.py:2135:_copy_categories (406,566 samples, 0.48%)</title><rect x="648.1" y="101" width="5.6" height="15.0" fill="rgb(225,9,34)" rx="2" ry="2" />
+<text  x="651.10" y="111.5" ></text>
+</g>
+<g >
+<title>~:0:&lt;built-in method builtins.len&gt; (143,448 samples, 0.17%)</title><rect x="645.4" y="85" width="2.0" height="15.0" fill="rgb(236,38,43)" rx="2" ry="2" />
+<text  x="648.41" y="95.5" ></text>
+</g>
+<g >
+<title>~:0:&lt;built-in method conv2d&gt; (251,099 samples, 0.29%)</title><rect x="1044.0" y="213" width="3.5" height="15.0" fill="rgb(233,95,47)" rx="2" ry="2" />
+<text  x="1047.03" y="223.5" ></text>
+</g>
+<g >
+<title>column_accessor.py:16:__init__ (731,978 samples, 0.86%)</title><rect x="637.3" y="133" width="10.1" height="15.0" fill="rgb(251,56,42)" rx="2" ry="2" />
+<text  x="640.25" y="143.5" ></text>
+</g>
+<g >
+<title>utils.py:298:__setitem__ (109,720 samples, 0.13%)</title><rect x="1033.6" y="37" width="1.6" height="15.0" fill="rgb(254,197,1)" rx="2" ry="2" />
+<text  x="1036.64" y="47.5" ></text>
+</g>
+<g >
+<title>column_accessor.py:221:select_by_index (757,883 samples, 0.89%)</title><rect x="777.0" y="101" width="10.5" height="15.0" fill="rgb(250,85,38)" rx="2" ry="2" />
+<text  x="779.99" y="111.5" ></text>
+</g>
+<g >
+<title>contextlib.py:71:inner (216,300 samples, 0.25%)</title><rect x="989.6" y="101" width="3.0" height="15.0" fill="rgb(229,5,37)" rx="2" ry="2" />
+<text  x="992.59" y="111.5" ></text>
+</g>
+<g >
+<title>numerical.py:23:__init__ (366,252 samples, 0.43%)</title><rect x="612.7" y="101" width="5.1" height="15.0" fill="rgb(216,207,33)" rx="2" ry="2" />
+<text  x="615.73" y="111.5" ></text>
+</g>
+<g >
+<title>column.py:48:__init__ (105,549 samples, 0.12%)</title><rect x="1024.3" y="53" width="1.5" height="15.0" fill="rgb(229,39,6)" rx="2" ry="2" />
+<text  x="1027.32" y="63.5" ></text>
+</g>
+<g >
+<title>column_accessor.py:16:__init__ (364,274 samples, 0.43%)</title><rect x="617.8" y="117" width="5.1" height="15.0" fill="rgb(230,19,50)" rx="2" ry="2" />
+<text  x="620.81" y="127.5" ></text>
+</g>
+<g >
+<title>~:0:&lt;method 'cuda' of 'torch._C._TensorBase' objects&gt; (144,053 samples, 0.17%)</title><rect x="1041.4" y="213" width="2.0" height="15.0" fill="rgb(250,153,39)" rx="2" ry="2" />
+<text  x="1044.39" y="223.5" ></text>
+</g>
+<g >
+<title>buffer.py:15:__init__ (167,981 samples, 0.20%)</title><rect x="1137.6" y="181" width="2.3" height="15.0" fill="rgb(232,23,21)" rx="2" ry="2" />
+<text  x="1140.62" y="191.5" ></text>
+</g>
+<g >
+<title>container.py:188:__iadd__ (2,794,652 samples, 3.28%)</title><rect x="1147.0" y="229" width="38.7" height="15.0" fill="rgb(220,80,38)" rx="2" ry="2" />
+<text  x="1149.96" y="239.5" >con..</text>
+</g>
+<g >
+<title>contextlib.py:71:inner (54,480,395 samples, 63.96%)</title><rect x="34.1" y="165" width="754.7" height="15.0" fill="rgb(209,112,32)" rx="2" ry="2" />
+<text  x="37.11" y="175.5" >contextlib.py:71:inner</text>
+</g>
+<g >
+<title>csv.py:13:read_csv (5,422,621 samples, 6.37%)</title><rect x="1050.6" y="229" width="75.1" height="15.0" fill="rgb(236,122,8)" rx="2" ry="2" />
+<text  x="1053.55" y="239.5" >csv.py:1..</text>
+</g>
+<g >
+<title>common.py:1733:pandas_dtype (118,235 samples, 0.14%)</title><rect x="732.0" y="85" width="1.6" height="15.0" fill="rgb(252,151,22)" rx="2" ry="2" />
+<text  x="734.95" y="95.5" ></text>
+</g>
+<g >
+<title>column.py:1537:as_column (167,872 samples, 0.20%)</title><rect x="749.6" y="69" width="2.3" height="15.0" fill="rgb(229,96,18)" rx="2" ry="2" />
+<text  x="752.57" y="79.5" ></text>
+</g>
+<g >
+<title>~:0:&lt;cudf._lib.copying.gather&gt; (2,147,437 samples, 2.52%)</title><rect x="998.8" y="101" width="29.7" height="15.0" fill="rgb(217,44,31)" rx="2" ry="2" />
+<text  x="1001.79" y="111.5" >~:..</text>
+</g>
+<g >
+<title>dataframe.py:586:__setattr__ (877,831 samples, 1.03%)</title><rect x="623.3" y="133" width="12.2" height="15.0" fill="rgb(236,46,45)" rx="2" ry="2" />
+<text  x="626.34" y="143.5" ></text>
+</g>
+<g >
+<title>dataframe.py:112:__init__ (252,386 samples, 0.30%)</title><rect x="989.1" y="133" width="3.5" height="15.0" fill="rgb(237,71,21)" rx="2" ry="2" />
+<text  x="992.09" y="143.5" ></text>
+</g>
+<g >
+<title>buffer.py:83:_init_from_array_like (828,187 samples, 0.97%)</title><rect x="710.4" y="85" width="11.5" height="15.0" fill="rgb(238,122,36)" rx="2" ry="2" />
+<text  x="713.42" y="95.5" ></text>
+</g>
+<g >
+<title>frame.py:507:_gather (1,097,410 samples, 1.29%)</title><rect x="1128.7" y="213" width="15.2" height="15.0" fill="rgb(214,82,23)" rx="2" ry="2" />
+<text  x="1131.69" y="223.5" ></text>
+</g>
+<g >
+<title>indexing.py:453:_get_column_selection (1,573,772 samples, 1.85%)</title><rect x="767.0" y="133" width="21.8" height="15.0" fill="rgb(206,47,2)" rx="2" ry="2" />
+<text  x="770.03" y="143.5" >i..</text>
+</g>
+<g >
+<title>fetch.py:42:fetch (73,976,075 samples, 86.85%)</title><rect x="10.4" y="229" width="1024.8" height="15.0" fill="rgb(218,172,36)" rx="2" ry="2" />
+<text  x="13.37" y="239.5" >fetch.py:42:fetch</text>
+</g>
+<g >
+<title>dataframe.py:2433:columns (96,200 samples, 0.11%)</title><rect x="1127.3" y="229" width="1.3" height="15.0" fill="rgb(205,56,54)" rx="2" ry="2" />
+<text  x="1130.29" y="239.5" ></text>
+</g>
+<g >
+<title>buffer.py:83:_init_from_array_like (535,407 samples, 0.63%)</title><rect x="593.9" y="101" width="7.4" height="15.0" fill="rgb(214,75,20)" rx="2" ry="2" />
+<text  x="596.92" y="111.5" ></text>
+</g>
+<g >
+<title>~:0:&lt;built-in method posix.stat&gt; (175,677 samples, 0.21%)</title><rect x="34.6" y="101" width="2.4" height="15.0" fill="rgb(221,156,45)" rx="2" ry="2" />
+<text  x="37.59" y="111.5" ></text>
+</g>
+<g >
+<title>~:0:&lt;built-in method builtins.isinstance&gt; (120,998 samples, 0.14%)</title><rect x="640.2" y="85" width="1.6" height="15.0" fill="rgb(246,124,25)" rx="2" ry="2" />
+<text  x="643.17" y="95.5" ></text>
+</g>
+<g >
+<title>column_accessor.py:221:select_by_index (96,752 samples, 0.11%)</title><rect x="1145.6" y="181" width="1.3" height="15.0" fill="rgb(241,76,26)" rx="2" ry="2" />
+<text  x="1148.61" y="191.5" ></text>
+</g>
+<g >
+<title>linear.py:85:reset_parameters (2,790,348 samples, 3.28%)</title><rect x="1147.0" y="165" width="38.7" height="15.0" fill="rgb(219,143,48)" rx="2" ry="2" />
+<text  x="1150.02" y="175.5" >lin..</text>
+</g>
+<g >
+<title>_collections_abc.py:760:__iter__ (180,022 samples, 0.21%)</title><rect x="655.2" y="85" width="2.5" height="15.0" fill="rgb(206,46,20)" rx="2" ry="2" />
+<text  x="658.25" y="95.5" ></text>
+</g>
+<g >
+<title>genericpath.py:16:exists (175,823 samples, 0.21%)</title><rect x="34.6" y="117" width="2.4" height="15.0" fill="rgb(236,197,14)" rx="2" ry="2" />
+<text  x="37.59" y="127.5" ></text>
+</g>
+<g >
+<title>~:0:&lt;built-in method torch._C._nn.mse_loss&gt; (303,152 samples, 0.36%)</title><rect x="1035.2" y="245" width="4.2" height="15.0" fill="rgb(208,202,19)" rx="2" ry="2" />
+<text  x="1038.16" y="255.5" ></text>
+</g>
+<g >
+<title>utils.py:287:__setitem__ (186,985 samples, 0.22%)</title><rect x="1026.0" y="69" width="2.5" height="15.0" fill="rgb(241,68,3)" rx="2" ry="2" />
+<text  x="1028.95" y="79.5" ></text>
+</g>
+<g >
+<title>contextlib.py:71:inner (104,203 samples, 0.12%)</title><rect x="1143.9" y="197" width="1.4" height="15.0" fill="rgb(218,211,10)" rx="2" ry="2" />
+<text  x="1146.89" y="207.5" ></text>
+</g>
+<g >
+<title>~:0:&lt;cudf._lib.csv.read_csv&gt; (5,398,545 samples, 6.34%)</title><rect x="1050.9" y="213" width="74.8" height="15.0" fill="rgb(247,181,40)" rx="2" ry="2" />
+<text  x="1053.88" y="223.5" >~:0:&lt;cud..</text>
+</g>
+<g >
+<title>dataframe.py:112:__init__ (116,570 samples, 0.14%)</title><rect x="1125.7" y="229" width="1.6" height="15.0" fill="rgb(248,106,34)" rx="2" ry="2" />
+<text  x="1128.67" y="239.5" ></text>
+</g>
+<g >
+<title>indexing.py:453:_get_column_selection (220,665 samples, 0.26%)</title><rect x="1143.9" y="213" width="3.0" height="15.0" fill="rgb(244,164,46)" rx="2" ry="2" />
+<text  x="1146.89" y="223.5" ></text>
+</g>
+<g >
+<title>column_accessor.py:16:__init__ (100,683 samples, 0.12%)</title><rect x="987.7" y="101" width="1.4" height="15.0" fill="rgb(235,45,50)" rx="2" ry="2" />
+<text  x="990.70" y="111.5" ></text>
+</g>
+<g >
+<title>~:0:&lt;built-in method builtins.isinstance&gt; (118,970 samples, 0.14%)</title><rect x="652.1" y="85" width="1.6" height="15.0" fill="rgb(212,53,9)" rx="2" ry="2" />
+<text  x="655.08" y="95.5" ></text>
+</g>
+<g >
+<title>column_accessor.py:16:__init__ (202,315 samples, 0.24%)</title><rect x="992.7" y="117" width="2.8" height="15.0" fill="rgb(208,122,43)" rx="2" ry="2" />
+<text  x="995.67" y="127.5" ></text>
+</g>
+<g >
+<title>dataframe.py:2433:columns (753,572 samples, 0.88%)</title><rect x="637.0" y="149" width="10.4" height="15.0" fill="rgb(233,182,31)" rx="2" ry="2" />
+<text  x="639.95" y="159.5" ></text>
+</g>
+<g >
+<title>buffer.py:83:_init_from_array_like (105,726 samples, 0.12%)</title><rect x="1138.5" y="165" width="1.4" height="15.0" fill="rgb(243,75,4)" rx="2" ry="2" />
+<text  x="1141.48" y="175.5" ></text>
+</g>
+<g >
+<title>column_accessor.py:105:columns (92,776 samples, 0.11%)</title><rect x="765.7" y="85" width="1.3" height="15.0" fill="rgb(216,138,14)" rx="2" ry="2" />
+<text  x="768.74" y="95.5" ></text>
+</g>
+<g >
+<title>conv.py:414:_conv_forward (124,418 samples, 0.15%)</title><rect x="1047.9" y="197" width="1.7" height="15.0" fill="rgb(206,84,39)" rx="2" ry="2" />
+<text  x="1050.90" y="207.5" ></text>
+</g>
+<g >
+<title>frame.py:497:_get_columns_by_index (251,517 samples, 0.30%)</title><rect x="1031.7" y="101" width="3.5" height="15.0" fill="rgb(244,228,50)" rx="2" ry="2" />
+<text  x="1034.68" y="111.5" ></text>
+</g>
+<g >
+<title>column_accessor.py:16:__init__ (200,009 samples, 0.23%)</title><rect x="1032.4" y="69" width="2.8" height="15.0" fill="rgb(238,193,4)" rx="2" ry="2" />
+<text  x="1035.39" y="79.5" ></text>
+</g>
+<g >
+<title>column.py:1401:build_column (973,955 samples, 1.14%)</title><rect x="604.3" y="117" width="13.5" height="15.0" fill="rgb(208,87,18)" rx="2" ry="2" />
+<text  x="607.32" y="127.5" ></text>
+</g>
+<g >
+<title>buffer.py:145:confirm_1d_contiguous (153,025 samples, 0.18%)</title><rect x="599.2" y="85" width="2.1" height="15.0" fill="rgb(240,64,47)" rx="2" ry="2" />
+<text  x="602.22" y="95.5" ></text>
+</g>
+<g >
+<title>dataloader.py:473:_next_data (73,992,370 samples, 86.87%)</title><rect x="10.1" y="245" width="1025.1" height="15.0" fill="rgb(254,210,15)" rx="2" ry="2" />
+<text  x="13.14" y="255.5" >dataloader.py:473:_next_data</text>
+</g>
+<g >
+<title>column.py:1401:build_column (1,508,146 samples, 1.77%)</title><rect x="726.5" y="101" width="20.9" height="15.0" fill="rgb(211,210,23)" rx="2" ry="2" />
+<text  x="729.50" y="111.5" ></text>
+</g>
+<g >
+<title>init.py:352:kaiming_uniform_ (2,789,984 samples, 3.28%)</title><rect x="1147.0" y="149" width="38.7" height="15.0" fill="rgb(249,226,23)" rx="2" ry="2" />
+<text  x="1150.02" y="159.5" >ini..</text>
+</g>
+<g >
+<title>column.py:1537:as_column (169,745 samples, 0.20%)</title><rect x="639.5" y="101" width="2.3" height="15.0" fill="rgb(246,28,33)" rx="2" ry="2" />
+<text  x="642.49" y="111.5" ></text>
+</g>
+<g >
+<title>~:0:&lt;cudf._lib.copying.gather&gt; (7,769,471 samples, 9.12%)</title><rect x="659.4" y="117" width="107.6" height="15.0" fill="rgb(214,210,11)" rx="2" ry="2" />
+<text  x="662.39" y="127.5" >~:0:&lt;cudf._li..</text>
+</g>
+<g >
+<title>column_accessor.py:16:__init__ (93,443 samples, 0.11%)</title><rect x="1127.3" y="213" width="1.3" height="15.0" fill="rgb(214,214,27)" rx="2" ry="2" />
+<text  x="1130.32" y="223.5" ></text>
+</g>
+<g >
+<title>frame.py:497:_get_columns_by_index (909,994 samples, 1.07%)</title><rect x="776.2" y="117" width="12.6" height="15.0" fill="rgb(238,190,42)" rx="2" ry="2" />
+<text  x="779.22" y="127.5" ></text>
+</g>
+<g >
+<title>dataframe.py:586:__setattr__ (242,628 samples, 0.28%)</title><rect x="989.2" y="117" width="3.4" height="15.0" fill="rgb(214,33,25)" rx="2" ry="2" />
+<text  x="992.23" y="127.5" ></text>
+</g>
+<g >
+<title>csv.py:13:read_csv (175,347 samples, 0.21%)</title><rect x="1029.2" y="85" width="2.5" height="15.0" fill="rgb(218,60,45)" rx="2" ry="2" />
+<text  x="1032.25" y="95.5" ></text>
+</g>
+<g >
+<title>abc.py:137:__instancecheck__ (102,753 samples, 0.12%)</title><rect x="725.1" y="69" width="1.4" height="15.0" fill="rgb(233,158,40)" rx="2" ry="2" />
+<text  x="728.08" y="79.5" ></text>
+</g>
+<g >
+<title>frame.py:507:_gather (122,979 samples, 0.14%)</title><rect x="632.5" y="85" width="1.7" height="15.0" fill="rgb(237,60,12)" rx="2" ry="2" />
+<text  x="635.52" y="95.5" ></text>
+</g>
+<g >
+<title>msms.py:94:forward (152,774 samples, 0.18%)</title><rect x="1047.5" y="245" width="2.1" height="15.0" fill="rgb(247,43,10)" rx="2" ry="2" />
+<text  x="1050.51" y="255.5" ></text>
+</g>
+<g >
+<title>dataframe.py:586:__setattr__ (112,063 samples, 0.13%)</title><rect x="1125.7" y="213" width="1.6" height="15.0" fill="rgb(238,25,11)" rx="2" ry="2" />
+<text  x="1128.73" y="223.5" ></text>
+</g>
+<g >
+<title>~:0:&lt;built-in method builtins.hasattr&gt; (145,437 samples, 0.17%)</title><rect x="721.9" y="85" width="2.0" height="15.0" fill="rgb(254,109,17)" rx="2" ry="2" />
+<text  x="724.90" y="95.5" ></text>
+</g>
+<g >
+<title>~:0:&lt;cudf._lib.interop.to_dlpack&gt; (2,668,985 samples, 3.13%)</title><rect x="788.9" y="133" width="36.9" height="15.0" fill="rgb(251,110,21)" rx="2" ry="2" />
+<text  x="791.86" y="143.5" >~:0..</text>
+</g>
+<g >
+<title>utils.py:273:__get__ (89,543 samples, 0.11%)</title><rect x="634.3" y="101" width="1.2" height="15.0" fill="rgb(242,176,17)" rx="2" ry="2" />
+<text  x="637.26" y="111.5" ></text>
+</g>
+<g >
+<title>utils.py:298:__setitem__ (396,129 samples, 0.47%)</title><rect x="751.9" y="69" width="5.5" height="15.0" fill="rgb(246,85,5)" rx="2" ry="2" />
+<text  x="754.90" y="79.5" ></text>
+</g>
+<g >
+<title>contextlib.py:71:inner (661,488 samples, 0.78%)</title><rect x="767.1" y="117" width="9.1" height="15.0" fill="rgb(207,41,30)" rx="2" ry="2" />
+<text  x="770.06" y="127.5" ></text>
+</g>
+<g >
+<title>all (85,179,835 samples, 100%)</title><rect x="10.0" y="293" width="1180.0" height="15.0" fill="rgb(207,50,0)" rx="2" ry="2" />
+<text  x="13.00" y="303.5" ></text>
+</g>
+<g >
+<title>utils.py:287:__setitem__ (86,363 samples, 0.10%)</title><rect x="1142.7" y="165" width="1.2" height="15.0" fill="rgb(236,115,14)" rx="2" ry="2" />
+<text  x="1145.69" y="175.5" ></text>
+</g>
+<g >
+<title>dataframe.py:6805:to_dlpack (2,671,220 samples, 3.14%)</title><rect x="788.8" y="165" width="37.0" height="15.0" fill="rgb(236,111,52)" rx="2" ry="2" />
+<text  x="791.83" y="175.5" >dat..</text>
+</g>
+<g >
+<title>~:0:&lt;cudf._lib.csv.read_csv&gt; (174,568 samples, 0.20%)</title><rect x="1029.3" y="69" width="2.4" height="15.0" fill="rgb(244,152,13)" rx="2" ry="2" />
+<text  x="1032.26" y="79.5" ></text>
+</g>
+<g >
+<title>dtypes.py:222:is_list_dtype (258,990 samples, 0.30%)</title><rect x="759.4" y="101" width="3.6" height="15.0" fill="rgb(241,68,48)" rx="2" ry="2" />
+<text  x="762.37" y="111.5" ></text>
+</g>
+<g >
+<title>~:0:&lt;built-in method builtins.len&gt; (142,165 samples, 0.17%)</title><rect x="785.5" y="37" width="2.0" height="15.0" fill="rgb(237,170,51)" rx="2" ry="2" />
+<text  x="788.52" y="47.5" ></text>
+</g>
+<g >
+<title>dataframe.py:2426:columns (104,667 samples, 0.12%)</title><rect x="635.5" y="149" width="1.5" height="15.0" fill="rgb(236,129,19)" rx="2" ry="2" />
+<text  x="638.50" y="159.5" ></text>
+</g>
+<g >
+<title>numerical.py:23:__init__ (157,438 samples, 0.18%)</title><rect x="1023.6" y="69" width="2.2" height="15.0" fill="rgb(222,218,43)" rx="2" ry="2" />
+<text  x="1026.60" y="79.5" ></text>
+</g>
+<g >
+<title>conv.py:414:_conv_forward (251,134 samples, 0.29%)</title><rect x="1044.0" y="229" width="3.5" height="15.0" fill="rgb(254,111,52)" rx="2" ry="2" />
+<text  x="1047.03" y="239.5" ></text>
+</g>
+<g >
+<title>_collections_abc.py:760:__iter__ (179,959 samples, 0.21%)</title><rect x="649.6" y="85" width="2.5" height="15.0" fill="rgb(240,189,39)" rx="2" ry="2" />
+<text  x="652.59" y="95.5" ></text>
+</g>
+<g >
+<title>utils.py:287:__setitem__ (677,948 samples, 0.80%)</title><rect x="778.1" y="69" width="9.4" height="15.0" fill="rgb(253,167,46)" rx="2" ry="2" />
+<text  x="781.10" y="79.5" ></text>
+</g>
+<g >
+<title>~:0:&lt;cudf._lib.csv.read_csv&gt; (42,288,634 samples, 49.65%)</title><rect x="37.0" y="133" width="585.9" height="15.0" fill="rgb(220,118,26)" rx="2" ry="2" />
+<text  x="40.03" y="143.5" >~:0:&lt;cudf._lib.csv.read_csv&gt;</text>
+</g>
+<g >
+<title>dtypes.py:222:is_list_dtype (122,365 samples, 0.14%)</title><rect x="611.0" y="101" width="1.7" height="15.0" fill="rgb(253,117,54)" rx="2" ry="2" />
+<text  x="614.04" y="111.5" ></text>
+</g>
+<g >
+<title>dtypes.py:233:is_struct_dtype (126,987 samples, 0.15%)</title><rect x="737.7" y="85" width="1.8" height="15.0" fill="rgb(243,176,54)" rx="2" ry="2" />
+<text  x="740.74" y="95.5" ></text>
+</g>
+<g >
+<title>~:0:&lt;built-in method builtins.isinstance&gt; (186,827 samples, 0.22%)</title><rect x="723.9" y="85" width="2.6" height="15.0" fill="rgb(209,143,46)" rx="2" ry="2" />
+<text  x="726.91" y="95.5" ></text>
+</g>
+<g >
+<title>utils.py:298:__setitem__ (110,710 samples, 0.13%)</title><rect x="993.9" y="85" width="1.6" height="15.0" fill="rgb(226,55,22)" rx="2" ry="2" />
+<text  x="996.94" y="95.5" ></text>
+</g>
+<g >
+<title>conv.py:422:forward (124,432 samples, 0.15%)</title><rect x="1047.9" y="213" width="1.7" height="15.0" fill="rgb(242,115,53)" rx="2" ry="2" />
+<text  x="1050.90" y="223.5" ></text>
+</g>
+<g >
+<title>functional.py:2637:mse_loss (303,389 samples, 0.36%)</title><rect x="1035.2" y="261" width="4.2" height="15.0" fill="rgb(245,168,15)" rx="2" ry="2" />
+<text  x="1038.16" y="271.5" ></text>
+</g>
+<g >
+<title>ioutils.py:1090:get_filepath_or_buffer (180,165 samples, 0.21%)</title><rect x="34.5" y="133" width="2.5" height="15.0" fill="rgb(240,179,41)" rx="2" ry="2" />
+<text  x="37.53" y="143.5" ></text>
+</g>
+<g >
+<title>dataframe.py:2433:columns (208,284 samples, 0.24%)</title><rect x="992.6" y="133" width="2.9" height="15.0" fill="rgb(229,24,11)" rx="2" ry="2" />
+<text  x="995.59" y="143.5" ></text>
+</g>
+<g >
+<title>utils.py:287:__setitem__ (684,066 samples, 0.80%)</title><rect x="637.9" y="117" width="9.5" height="15.0" fill="rgb(214,203,28)" rx="2" ry="2" />
+<text  x="640.92" y="127.5" ></text>
+</g>
+<g >
+<title>~:0:&lt;built-in method builtins.isinstance&gt; (119,357 samples, 0.14%)</title><rect x="657.7" y="85" width="1.7" height="15.0" fill="rgb(252,62,40)" rx="2" ry="2" />
+<text  x="660.74" y="95.5" ></text>
+</g>
+<g >
+<title>column.py:1401:build_column (416,843 samples, 0.49%)</title><rect x="1020.0" y="85" width="5.8" height="15.0" fill="rgb(253,186,3)" rx="2" ry="2" />
+<text  x="1023.01" y="95.5" ></text>
+</g>
+<g >
+<title>~:0:&lt;cudf._lib.csv.read_csv&gt; (631,590 samples, 0.74%)</title><rect x="767.5" y="85" width="8.7" height="15.0" fill="rgb(213,118,28)" rx="2" ry="2" />
+<text  x="770.47" y="95.5" ></text>
+</g>
+<g >
+<title>frame.py:497:_get_columns_by_index (116,170 samples, 0.14%)</title><rect x="1145.3" y="197" width="1.6" height="15.0" fill="rgb(250,42,14)" rx="2" ry="2" />
+<text  x="1148.34" y="207.5" ></text>
+</g>
+<g >
+<title>column_accessor.py:105:columns (104,506 samples, 0.12%)</title><rect x="824.4" y="101" width="1.4" height="15.0" fill="rgb(222,189,53)" rx="2" ry="2" />
+<text  x="827.38" y="111.5" ></text>
+</g>
+<g >
+<title>contextlib.py:71:inner (15,107,466 samples, 17.74%)</title><rect x="825.9" y="149" width="209.3" height="15.0" fill="rgb(246,132,28)" rx="2" ry="2" />
+<text  x="828.88" y="159.5" >contextlib.py:71:inner</text>
+</g>
+<g >
+<title>~:0:&lt;cudf._lib.csv.read_csv&gt; (167,211 samples, 0.20%)</title><rect x="990.3" y="69" width="2.3" height="15.0" fill="rgb(233,99,26)" rx="2" ry="2" />
+<text  x="993.27" y="79.5" ></text>
+</g>
+<g >
+<title>utils.py:298:__setitem__ (396,969 samples, 0.47%)</title><rect x="782.0" y="53" width="5.5" height="15.0" fill="rgb(240,33,47)" rx="2" ry="2" />
+<text  x="784.99" y="63.5" ></text>
+</g>
+<g >
+<title>module.py:715:_call_impl (450,023 samples, 0.53%)</title><rect x="1043.4" y="261" width="6.2" height="15.0" fill="rgb(221,21,23)" rx="2" ry="2" />
+<text  x="1046.39" y="271.5" ></text>
+</g>
+<g >
+<title>~:0:&lt;cudf._lib.copying.gather&gt; (111,149 samples, 0.13%)</title><rect x="632.7" y="69" width="1.5" height="15.0" fill="rgb(232,167,36)" rx="2" ry="2" />
+<text  x="635.68" y="79.5" ></text>
+</g>
+<g >
+<title>utils.py:287:__setitem__ (341,198 samples, 0.40%)</title><rect x="618.1" y="101" width="4.8" height="15.0" fill="rgb(222,75,16)" rx="2" ry="2" />
+<text  x="621.13" y="111.5" ></text>
+</g>
+<g >
+<title>~:0:&lt;built-in method builtins.len&gt; (141,864 samples, 0.17%)</title><rect x="755.4" y="53" width="2.0" height="15.0" fill="rgb(227,204,31)" rx="2" ry="2" />
+<text  x="758.42" y="63.5" ></text>
+</g>
+<g >
+<title>~:0:&lt;method 'uniform_' of 'torch._C._TensorBase' objects&gt; (2,789,121 samples, 3.27%)</title><rect x="1147.0" y="133" width="38.7" height="15.0" fill="rgb(253,90,20)" rx="2" ry="2" />
+<text  x="1150.03" y="143.5" >~:0..</text>
+</g>
+<g >
+<title>buffer.py:133:_buffer_data_from_array_interface (156,586 samples, 0.18%)</title><rect x="597.1" y="85" width="2.1" height="15.0" fill="rgb(220,66,7)" rx="2" ry="2" />
+<text  x="600.05" y="95.5" ></text>
+</g>
+<g >
+<title>dtypes.py:222:is_list_dtype (497,824 samples, 0.58%)</title><rect x="812.4" y="117" width="6.9" height="15.0" fill="rgb(216,158,18)" rx="2" ry="2" />
+<text  x="815.39" y="127.5" ></text>
+</g>
+<g >
+<title>module.py:463:&lt;lambda&gt; (144,065 samples, 0.17%)</title><rect x="1041.4" y="229" width="2.0" height="15.0" fill="rgb(214,91,22)" rx="2" ry="2" />
+<text  x="1044.39" y="239.5" ></text>
+</g>
+<g >
+<title>buffer.py:145:confirm_1d_contiguous (236,704 samples, 0.28%)</title><rect x="718.6" y="69" width="3.3" height="15.0" fill="rgb(217,108,42)" rx="2" ry="2" />
+<text  x="721.62" y="79.5" ></text>
+</g>
+<g >
+<title>fetch.py:44:&lt;listcomp&gt; (73,971,727 samples, 86.84%)</title><rect x="10.4" y="213" width="1024.8" height="15.0" fill="rgb(236,70,35)" rx="2" ry="2" />
+<text  x="13.43" y="223.5" >fetch.py:44:&lt;listcomp&gt;</text>
+</g>
+<g >
+<title>~:0:&lt;built-in method builtins.isinstance&gt; (120,780 samples, 0.14%)</title><rect x="602.6" y="101" width="1.7" height="15.0" fill="rgb(252,29,30)" rx="2" ry="2" />
+<text  x="605.64" y="111.5" ></text>
+</g>
+<g >
+<title>utils.py:298:__setitem__ (199,786 samples, 0.23%)</title><rect x="620.1" y="85" width="2.8" height="15.0" fill="rgb(243,81,15)" rx="2" ry="2" />
+<text  x="623.09" y="95.5" ></text>
+</g>
+<g >
+<title>frame.py:2183:_copy_struct_names (409,012 samples, 0.48%)</title><rect x="653.7" y="101" width="5.7" height="15.0" fill="rgb(231,195,31)" rx="2" ry="2" />
+<text  x="656.73" y="111.5" ></text>
+</g>
+<g >
+<title>utils.py:287:__setitem__ (86,547 samples, 0.10%)</title><rect x="1145.7" y="149" width="1.2" height="15.0" fill="rgb(241,197,32)" rx="2" ry="2" />
+<text  x="1148.75" y="159.5" ></text>
+</g>
+<g >
+<title>module.py:715:_call_impl (147,526 samples, 0.17%)</title><rect x="1047.6" y="229" width="2.0" height="15.0" fill="rgb(232,44,51)" rx="2" ry="2" />
+<text  x="1050.58" y="239.5" ></text>
+</g>
+<g >
+<title>frame.py:2135:_copy_categories (112,373 samples, 0.13%)</title><rect x="995.7" y="85" width="1.5" height="15.0" fill="rgb(221,204,2)" rx="2" ry="2" />
+<text  x="998.67" y="95.5" ></text>
+</g>
+<g >
+<title>indexing.py:387:_getitem_tuple_arg (1,323,112 samples, 1.55%)</title><rect x="1128.6" y="229" width="18.3" height="15.0" fill="rgb(212,50,10)" rx="2" ry="2" />
+<text  x="1131.62" y="239.5" ></text>
+</g>
+<g >
+<title>container.py:217:extend (2,794,640 samples, 3.28%)</title><rect x="1147.0" y="213" width="38.7" height="15.0" fill="rgb(225,215,44)" rx="2" ry="2" />
+<text  x="1149.96" y="223.5" >con..</text>
+</g>
+<g >
+<title>column_accessor.py:16:__init__ (92,380 samples, 0.11%)</title><rect x="1145.7" y="165" width="1.2" height="15.0" fill="rgb(210,125,53)" rx="2" ry="2" />
+<text  x="1148.67" y="175.5" ></text>
+</g>
+<g >
+<title>contextlib.py:71:inner (99,903 samples, 0.12%)</title><rect x="1125.9" y="197" width="1.4" height="15.0" fill="rgb(211,218,8)" rx="2" ry="2" />
+<text  x="1128.90" y="207.5" ></text>
+</g>
+<g >
+<title>dtypes.py:233:is_struct_dtype (343,411 samples, 0.40%)</title><rect x="819.3" y="117" width="4.7" height="15.0" fill="rgb(233,147,4)" rx="2" ry="2" />
+<text  x="822.28" y="127.5" ></text>
+</g>
+<g >
+<title>column_accessor.py:221:select_by_index (209,474 samples, 0.25%)</title><rect x="1032.3" y="85" width="2.9" height="15.0" fill="rgb(248,227,25)" rx="2" ry="2" />
+<text  x="1035.26" y="95.5" ></text>
+</g>
+<g >
+<title>dtypes.py:172:is_categorical_dtype (143,114 samples, 0.17%)</title><rect x="757.4" y="101" width="2.0" height="15.0" fill="rgb(240,102,5)" rx="2" ry="2" />
+<text  x="760.39" y="111.5" ></text>
+</g>
+<g >
+<title>column_accessor.py:16:__init__ (199,401 samples, 0.23%)</title><rect x="1025.8" y="85" width="2.7" height="15.0" fill="rgb(236,125,45)" rx="2" ry="2" />
+<text  x="1028.78" y="95.5" ></text>
+</g>
+<g >
+<title>column.py:1401:build_column (124,335 samples, 0.15%)</title><rect x="1123.9" y="197" width="1.8" height="15.0" fill="rgb(231,169,30)" rx="2" ry="2" />
+<text  x="1126.95" y="207.5" ></text>
+</g>
+<g >
+<title>linear.py:74:__init__ (2,791,252 samples, 3.28%)</title><rect x="1147.0" y="181" width="38.7" height="15.0" fill="rgb(251,32,25)" rx="2" ry="2" />
+<text  x="1150.00" y="191.5" >lin..</text>
+</g>
+<g >
+<title>conv.py:422:forward (251,163 samples, 0.29%)</title><rect x="1044.0" y="245" width="3.5" height="15.0" fill="rgb(236,91,3)" rx="2" ry="2" />
+<text  x="1047.03" y="255.5" ></text>
+</g>
+<g >
+<title>buffer.py:83:_init_from_array_like (228,906 samples, 0.27%)</title><rect x="1016.8" y="69" width="3.2" height="15.0" fill="rgb(250,174,46)" rx="2" ry="2" />
+<text  x="1019.83" y="79.5" ></text>
+</g>
+<g >
+<title>msms.py:23:__init__ (7,025,519 samples, 8.25%)</title><rect x="1049.6" y="261" width="97.3" height="15.0" fill="rgb(240,137,15)" rx="2" ry="2" />
+<text  x="1052.62" y="271.5" >msms.py:23:..</text>
+</g>
+<g >
+<title>dataframe.py:2483:index (92,543 samples, 0.11%)</title><rect x="634.2" y="117" width="1.3" height="15.0" fill="rgb(242,43,37)" rx="2" ry="2" />
+<text  x="637.22" y="127.5" ></text>
+</g>
+<g >
+<title>frame.py:507:_gather (8,596,387 samples, 10.09%)</title><rect x="647.9" y="133" width="119.1" height="15.0" fill="rgb(229,139,19)" rx="2" ry="2" />
+<text  x="650.94" y="143.5" >frame.py:507:_..</text>
+</g>
+<g >
+<title>~:0:&lt;cudf._lib.csv.read_csv&gt; (11,688,342 samples, 13.72%)</title><rect x="827.2" y="117" width="161.9" height="15.0" fill="rgb(249,93,11)" rx="2" ry="2" />
+<text  x="830.18" y="127.5" >~:0:&lt;cudf._lib.csv.r..</text>
+</g>
+<g >
+<title>numerical.py:23:__init__ (101,230 samples, 0.12%)</title><rect x="986.3" y="85" width="1.4" height="15.0" fill="rgb(220,228,29)" rx="2" ry="2" />
+<text  x="989.30" y="95.5" ></text>
+</g>
+<g >
+<title>frame.py:2208:_postprocess_columns (225,507 samples, 0.26%)</title><rect x="995.7" y="101" width="3.1" height="15.0" fill="rgb(223,152,46)" rx="2" ry="2" />
+<text  x="998.67" y="111.5" ></text>
+</g>
+<g >
+<title>utils.py:287:__setitem__ (676,515 samples, 0.79%)</title><rect x="748.0" y="85" width="9.4" height="15.0" fill="rgb(241,32,26)" rx="2" ry="2" />
+<text  x="751.01" y="95.5" ></text>
+</g>
+<g >
+<title>csv.py:13:read_csv (167,957 samples, 0.20%)</title><rect x="990.3" y="85" width="2.3" height="15.0" fill="rgb(219,210,6)" rx="2" ry="2" />
+<text  x="993.26" y="95.5" ></text>
+</g>
+<g >
+<title>dtypes.py:233:is_struct_dtype (178,192 samples, 0.21%)</title><rect x="763.0" y="101" width="2.4" height="15.0" fill="rgb(234,212,44)" rx="2" ry="2" />
+<text  x="765.96" y="111.5" ></text>
+</g>
+<g >
+<title>module.py:449:cuda (290,582 samples, 0.34%)</title><rect x="1039.4" y="261" width="4.0" height="15.0" fill="rgb(243,121,7)" rx="2" ry="2" />
+<text  x="1042.36" y="271.5" ></text>
+</g>
+<g >
+<title>contextlib.py:71:inner (96,641 samples, 0.11%)</title><rect x="787.5" y="101" width="1.3" height="15.0" fill="rgb(243,106,39)" rx="2" ry="2" />
+<text  x="790.49" y="111.5" ></text>
+</g>
+<g >
+<title>csv.py:13:read_csv (11,740,468 samples, 13.78%)</title><rect x="826.5" y="133" width="162.6" height="15.0" fill="rgb(220,49,2)" rx="2" ry="2" />
+<text  x="829.45" y="143.5" >csv.py:13:read_csv</text>
+</g>
+<g >
+<title>module.py:357:_apply (290,575 samples, 0.34%)</title><rect x="1039.4" y="245" width="4.0" height="15.0" fill="rgb(251,70,0)" rx="2" ry="2" />
+<text  x="1042.36" y="255.5" ></text>
+</g>
+<g >
+<title>utils.py:287:__setitem__ (187,381 samples, 0.22%)</title><rect x="1032.6" y="53" width="2.6" height="15.0" fill="rgb(242,202,52)" rx="2" ry="2" />
+<text  x="1035.56" y="63.5" ></text>
+</g>
+<g >
+<title>csv.py:13:read_csv (607,671 samples, 0.71%)</title><rect x="623.7" y="101" width="8.5" height="15.0" fill="rgb(248,84,34)" rx="2" ry="2" />
+<text  x="626.75" y="111.5" ></text>
+</g>
+<g >
+<title>frame.py:2208:_postprocess_columns (815,889 samples, 0.96%)</title><rect x="648.1" y="117" width="11.3" height="15.0" fill="rgb(224,1,48)" rx="2" ry="2" />
+<text  x="651.09" y="127.5" ></text>
+</g>
+<g >
+<title>buffer.py:133:_buffer_data_from_array_interface (242,213 samples, 0.28%)</title><rect x="715.3" y="69" width="3.3" height="15.0" fill="rgb(208,47,53)" rx="2" ry="2" />
+<text  x="718.26" y="79.5" ></text>
+</g>
+<g >
+<title>csv.py:13:read_csv (634,407 samples, 0.74%)</title><rect x="767.4" y="101" width="8.8" height="15.0" fill="rgb(235,170,16)" rx="2" ry="2" />
+<text  x="770.43" y="111.5" ></text>
+</g>
+<g >
+<title>column.py:48:__init__ (381,877 samples, 0.45%)</title><rect x="742.1" y="69" width="5.3" height="15.0" fill="rgb(217,31,14)" rx="2" ry="2" />
+<text  x="745.10" y="79.5" ></text>
+</g>
+<g >
+<title>utils.py:298:__setitem__ (109,488 samples, 0.13%)</title><rect x="1027.0" y="53" width="1.5" height="15.0" fill="rgb(212,114,16)" rx="2" ry="2" />
+<text  x="1030.03" y="63.5" ></text>
+</g>
+<g >
+<title>indexing.py:387:_getitem_tuple_arg (2,864,656 samples, 3.36%)</title><rect x="995.5" y="133" width="39.7" height="15.0" fill="rgb(225,67,10)" rx="2" ry="2" />
+<text  x="998.48" y="143.5" >ind..</text>
+</g>
+<g >
+<title>dlpack.py:41:to_dlpack (2,670,406 samples, 3.14%)</title><rect x="788.8" y="149" width="37.0" height="15.0" fill="rgb(214,166,30)" rx="2" ry="2" />
+<text  x="791.84" y="159.5" >dlp..</text>
+</g>
+<g >
+<title>csv.py:13:read_csv (42,477,228 samples, 49.87%)</title><rect x="34.4" y="149" width="588.5" height="15.0" fill="rgb(224,34,17)" rx="2" ry="2" />
+<text  x="37.41" y="159.5" >csv.py:13:read_csv</text>
+</g>
+<g >
+<title>dataloader.py:432:__next__ (73,992,406 samples, 86.87%)</title><rect x="10.1" y="261" width="1025.1" height="15.0" fill="rgb(251,89,30)" rx="2" ry="2" />
+<text  x="13.14" y="271.5" >dataloader.py:432:__next__</text>
+</g>
+<g >
+<title>contextlib.py:71:inner (225,609 samples, 0.26%)</title><rect x="1028.6" y="101" width="3.1" height="15.0" fill="rgb(224,0,29)" rx="2" ry="2" />
+<text  x="1031.55" y="111.5" ></text>
+</g>
+<g >
+<title>dtypes.py:222:is_list_dtype (190,308 samples, 0.22%)</title><rect x="735.1" y="85" width="2.6" height="15.0" fill="rgb(209,47,35)" rx="2" ry="2" />
+<text  x="738.11" y="95.5" ></text>
+</g>
+<g >
+<title>~:0:&lt;method 'run_backward' of 'torch._C._EngineBase' objects&gt; (311,817 samples, 0.37%)</title><rect x="1185.7" y="229" width="4.3" height="15.0" fill="rgb(209,0,43)" rx="2" ry="2" />
+<text  x="1188.68" y="239.5" ></text>
+</g>
+<g >
+<title>tensor.py:181:backward (312,491 samples, 0.37%)</title><rect x="1185.7" y="261" width="4.3" height="15.0" fill="rgb(229,142,30)" rx="2" ry="2" />
+<text  x="1188.67" y="271.5" ></text>
+</g>
+<g >
+<title>buffer.py:15:__init__ (847,829 samples, 1.00%)</title><rect x="592.6" y="117" width="11.7" height="15.0" fill="rgb(242,191,43)" rx="2" ry="2" />
+<text  x="595.57" y="127.5" ></text>
+</g>
+<g >
+<title>frame.py:2183:_copy_struct_names (113,048 samples, 0.13%)</title><rect x="997.2" y="85" width="1.6" height="15.0" fill="rgb(215,184,46)" rx="2" ry="2" />
+<text  x="1000.23" y="95.5" ></text>
+</g>
+<g >
+<title>indexing.py:387:_getitem_tuple_arg (148,272 samples, 0.17%)</title><rect x="632.2" y="101" width="2.0" height="15.0" fill="rgb(222,32,14)" rx="2" ry="2" />
+<text  x="635.17" y="111.5" ></text>
+</g>
+<g >
+<title>buffer.py:15:__init__ (1,315,849 samples, 1.54%)</title><rect x="708.3" y="101" width="18.2" height="15.0" fill="rgb(242,207,48)" rx="2" ry="2" />
+<text  x="711.27" y="111.5" ></text>
+</g>
+<g >
+<title>dataframe.py:112:__init__ (913,136 samples, 1.07%)</title><rect x="622.9" y="149" width="12.6" height="15.0" fill="rgb(240,157,44)" rx="2" ry="2" />
+<text  x="625.85" y="159.5" ></text>
+</g>
+<g >
+<title>numerical.py:23:__init__ (569,613 samples, 0.67%)</title><rect x="739.5" y="85" width="7.9" height="15.0" fill="rgb(219,206,24)" rx="2" ry="2" />
+<text  x="742.50" y="95.5" ></text>
+</g>
+<g >
+<title>indexing.py:387:_getitem_tuple_arg (10,209,612 samples, 11.99%)</title><rect x="647.4" y="149" width="141.4" height="15.0" fill="rgb(218,216,36)" rx="2" ry="2" />
+<text  x="650.39" y="159.5" >indexing.py:387:_..</text>
+</g>
+<g >
+<title>column_accessor.py:16:__init__ (92,098 samples, 0.11%)</title><rect x="1142.6" y="181" width="1.3" height="15.0" fill="rgb(228,158,23)" rx="2" ry="2" />
+<text  x="1145.61" y="191.5" ></text>
+</g>
+<g >
+<title>buffer.py:15:__init__ (108,233 samples, 0.13%)</title><rect x="1122.4" y="197" width="1.5" height="15.0" fill="rgb(252,101,14)" rx="2" ry="2" />
+<text  x="1125.45" y="207.5" ></text>
+</g>
+<g >
+<title>msms.py:40:__getitem__ (73,971,508 samples, 86.84%)</title><rect x="10.4" y="197" width="1024.8" height="15.0" fill="rgb(219,135,47)" rx="2" ry="2" />
+<text  x="13.43" y="207.5" >msms.py:40:__getitem__</text>
+</g>
+</g>
+</svg>

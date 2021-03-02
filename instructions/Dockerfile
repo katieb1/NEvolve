@@ -1,5 +1,5 @@
 # Dockerfile for RAPIDS image with PyTorch
-ARG IMAGE=rapidsai/rapidsai:cuda11.0-runtime-ubuntu18.04
+ARG IMAGE=rapidsai/rapidsai:cuda11.0-runtime-ubuntu20.04
 FROM $IMAGE
 
 RUN source activate rapids && \

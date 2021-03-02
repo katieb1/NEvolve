@@ -137,6 +137,7 @@ def train(gpu, args):
     # Initialize overall loss accumulator
     losses = []
     report_every = args.report_every
+    epoch_times = []
 
     # Extract info from dataloader and run network
     for epoch in range(args.epochs):
@@ -184,9 +185,12 @@ def train(gpu, args):
                 running_correct = 0.
 
         epoch_end = time.time()
-        print(f"Single iteration training time: {epoch_end - epoch_start}")
-
-#    print("Done Training")
+        epoch_times.append(epoch_end - epoch_start)
+        print(f"Single epoch training time: {epoch_end - epoch_start}")
+    
+    avg_epoch_time = np.mean(np.array(epoch_times))
+    print(f"Iteration time: {avg_epoch_time / 8}")
+    print("Done Training")
         
     # Check testing accuracy
     running_correct = 0.

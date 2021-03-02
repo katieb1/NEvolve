@@ -22,11 +22,11 @@ import msms
 # Define main function to parse arguments for training function
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-n', '--nodes', default=1, type=int, metavar='N')
+    parser.add_argument('-n', '--cpunodes', default=1, type=int, metavar='N')
     parser.add_argument('-g', '--gpus', default=1, type=int,
                         help='number of gpus per node')
     parser.add_argument('-nr', '--nr', default=0, type=int,
-                        help='ranking within the nodes')
+                        help='ranking within the cpu nodes')
     parser.add_argument('--epochs', default=2, type=int, metavar='N',
                         help='number of total epochs to run')
     parser.add_argument('--data', default="../pipeline/data", type=str,
@@ -46,8 +46,16 @@ def main():
                         help='weight decay rate (lambda)')
     parser.add_argument('--report_every', default=5, type=int,
                         help='print loss and accuracy every x minibatches')
+    parser.add_argument('--channels', default='3,6,8', type=str,
+                        help='comma-delimited string of colour channels to be produced by each convolutional layer')
+    parser.add_argument('--kernels', default='5,4,3', type=str,
+                        help='comma-delimited string kernel sizes to use in each convolutional layer')
+    parser.add_argument('--pools', default='2,1,1', type=str,
+                        help='500,100')
+    parser.add_argument('--hiddennodes', default='500, 100', type=str,
+                        help='comma-delimited string of hidden nodes to use in each fully connected layer')
     args = parser.parse_args()
-    args.world_size = args.gpus * args.nodes
+    args.world_size = args.gpus * args.cpunodes
     os.environ['MASTER_ADDR'] = os.uname()[1]             
     os.environ['MASTER_PORT'] = '8888'
     mp.spawn(train, nprocs=args.gpus, args=(args,))
@@ -108,12 +116,14 @@ def train(gpu, args):
                                              num_workers=0,
                                              sampler=dev_sampler)
     
-    
     # Set network parameters
-    pools = [2, 1, 1]
-    channels = [3, 6, 8]
-    kernels = [5, 4, 3]
-    nodes = [500, 100]
+    try:
+        channels = list(map(int, args.channels.split(',')))
+        kernels = list(map(int, args.kernels.split(',')))
+        pools = list(map(int, args.pools.split(',')))
+        nodes = list(map(int, args.hiddennodes.split(',')))
+    except ValueError:
+        raise Exception("One of the network hyperparameters (channels, kernels, pools, or hidde nods) could not be interpreted as a comma-delimited string of integers.")
 
     # Create model and wrap in DDP
     net = msms.Net(train_set.num_indivs, train_set.num_sites,

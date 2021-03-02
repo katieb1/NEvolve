@@ -1,10 +1,9 @@
 import os
 import numpy as np
-import cudf
 import torch
-from torch.utils.dlpack import from_dlpack
 import torch.nn as nn
 import torch.nn.functional as F
+import pandas as pd
 
 # An extension of torch Datasets for lazy loading msms data
 # To do:
@@ -31,7 +30,7 @@ class Dataset(torch.utils.data.Dataset):
     def __init__(self, dir, lookup, params, file_ids = None):
         self.dir = dir
         temp = np.load(lookup, allow_pickle = True).item()
-        temp2 = cudf.read_csv(params)
+        temp2 = pd.read_csv(params)
         self.num_sims = temp['num_sims'] # This is the number of sims per file, not total number
         self.num_indivs = temp['num_indivs']
         self.num_sites = temp['num_sites']
@@ -42,8 +41,8 @@ class Dataset(torch.utils.data.Dataset):
             raise Exception("Provided file ids exceed the number of files! Please double check.")
         else:
             self.file_ids = file_ids
-        self.labels = from_dlpack(temp2['labels'].to_dlpack()).reshape(-1, self.num_sims).long()[self.file_ids]
-        self.filelist = temp2['filename'][[(i * self.num_sims) for i in self.file_ids]].to_pandas().to_numpy()
+        self.labels = temp2['labels'].to_numpy().reshape(-1, self.num_sims)[self.file_ids]
+        self.filelist = temp2['filename'][[(i * self.num_sims) for i in self.file_ids]].to_numpy()
 
     # This returns the number of files (chunks) not the number of training
     # examples. Multiple by `self.num_sims` for true number of training examples.
@@ -54,7 +53,7 @@ class Dataset(torch.utils.data.Dataset):
     # The labels are more straightforward.
     def __getitem__(self, index):
         snps, positions = read_file(self.dir, self.filelist[index], self.num_sims, self.num_indivs, self.num_sites)
-        labels = self.labels[index]
+        labels = torch.from_numpy(self.labels[index]).long().cuda()
         return snps, positions, labels
 
 # A (reasonably) flexible neural network module for msms data
@@ -140,7 +139,7 @@ class Net(nn.Module):
 # `rows_to_skip` should indicate the number of rows above the first row with position data
 def read_file(dir, filename, num_sims, num_indivs, num_sites, rows_to_skip = 6):
     # Read in data using spaces as separator
-    data = cudf.read_csv(
+    data = pd.read_csv(
             os.path.join(dir, filename),
             header=None,
             dtype='float32',
@@ -157,9 +156,9 @@ def read_file(dir, filename, num_sims, num_indivs, num_sites, rows_to_skip = 6):
         snp_rows.extend(range(pos_row + 1, pos_row + num_indivs + 1))
 
     # Pull the SNP data out as cuDF series, convert to torch tensor, reshape
-    snps = from_dlpack(data.iloc[snp_rows, :].to_dlpack()).view(num_sims, num_indivs, num_sites)
+    snps = torch.from_numpy(data.iloc[snp_rows, :].to_numpy()).cuda()
 
     # Extract position data
-    positions = from_dlpack(data.iloc[pos_rows, :].to_dlpack())
+    positions = torch.from_numpy(data.iloc[pos_rows, :].to_numpy()).cuda()
 
     return snps, positions

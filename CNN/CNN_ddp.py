@@ -62,10 +62,9 @@ def train(gpu, args):
     
     # Calculate GPU rank
     rank = args.nr * args.gpus + gpu
-    print(f"GPU: {gpu}")
     dist.init_process_group(
         backend='nccl',
-                init_method='env://',
+        init_method='env://',
         world_size=args.world_size,
         rank=rank
     )
@@ -132,10 +131,11 @@ def train(gpu, args):
     # Extract info from dataloader and run network
     for epoch in range(args.epochs):
         
+        epoch_start = time.time()
         lr = args.lr_0 * (args.lr_r ** epoch)
         optimizer = torch.optim.Adam(net.parameters(),
                                      lr=lr,
-                                     weight_decay = args.l2_lambda)
+                                     weight_decay=args.l2_lambda)
         
         # Init running loss accumulator
         running_loss = 0.
@@ -173,7 +173,10 @@ def train(gpu, args):
                 running_loss = 0.
                 running_correct = 0.
 
-    print("Done Training")
+        epoch_end = time.time()
+        print(f"Single iteration training time: {epoch_end - epoch_start}")
+
+#    print("Done Training")
         
     # Check testing accuracy
     running_correct = 0.
@@ -193,7 +196,7 @@ def train(gpu, args):
     if gpu == 0:
         print(f"Total time run: {(toc-tic)/60:0.4f} minutes")
 
-    print(f'Dev Accuracy: {running_correct / (dev_set.num_sims * num_dev) * 100}')
+#    print(f'Dev Accuracy: {running_correct / (dev_set.num_sims * num_dev) * 100}')
     
     # Save recorded losses for plotting
     np.save("training_loss.npy", losses)

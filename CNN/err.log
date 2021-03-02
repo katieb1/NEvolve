@@ -1,0 +1,8 @@
+/opt/conda/envs/rapids/lib/python3.7/site-packages/cudf/io/dlpack.py:74: UserWarning: WARNING: cuDF to_dlpack() produces column-major (Fortran order) output. If the output tensor needs to be row major, transpose the output of this function.
+  return libdlpack.to_dlpack(gdf_cols)
+/opt/conda/envs/rapids/lib/python3.7/site-packages/cudf/io/dlpack.py:74: UserWarning: WARNING: cuDF to_dlpack() produces column-major (Fortran order) output. If the output tensor needs to be row major, transpose the output of this function.
+  return libdlpack.to_dlpack(gdf_cols)
+/opt/conda/envs/rapids/lib/python3.7/site-packages/cudf/io/dlpack.py:74: UserWarning: WARNING: cuDF to_dlpack() produces column-major (Fortran order) output. If the output tensor needs to be row major, transpose the output of this function.
+  return libdlpack.to_dlpack(gdf_cols)
+/opt/conda/envs/rapids/lib/python3.7/site-packages/cudf/io/dlpack.py:74: UserWarning: WARNING: cuDF to_dlpack() produces column-major (Fortran order) output. If the output tensor needs to be row major, transpose the output of this function.
+  return libdlpack.to_dlpack(gdf_cols)

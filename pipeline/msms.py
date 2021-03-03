@@ -41,6 +41,7 @@ class Dataset(torch.utils.data.Dataset):
             raise Exception("Provided file ids exceed the number of files! Please double check.")
         else:
             self.file_ids = file_ids
+        print(temp2['labels'].to_numpy().reshape(-1, self.num_sims).shape)
         self.labels = temp2['labels'].to_numpy().reshape(-1, self.num_sims)[self.file_ids]
         self.filelist = temp2['filename'][[(i * self.num_sims) for i in self.file_ids]].to_numpy()
 

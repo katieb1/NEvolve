@@ -5,7 +5,7 @@ import numpy as np
 import time
 
 # Decide on train / dev split
-lookup = np.load("metadata/lookup.npy", allow_pickle = True).item()
+lookup = np.load("../../data/metadata/lookup.npy", allow_pickle = True).item()
 num_dev = 4 # Number of data files to reserve for dev set
 shuffled_ids = np.random.choice(range(lookup['num_files']), lookup['num_files'], replace = False)
 train_ids = shuffled_ids[:-num_dev]
@@ -33,8 +33,8 @@ l2_lambd = 0.5 # Weight decay rate (L2 regularization)
 criterion = torch.nn.CrossEntropyLoss()
 
 # Initialize datasets
-train_set = msms.Dataset("data", "metadata/lookup.npy", "metadata/ms_param.csv", train_ids)
-dev_set = msms.Dataset("data", "metadata/lookup.npy", "metadata/ms_param.csv", dev_ids)
+train_set = msms.Dataset("../../data/data", "../../data/metadata/lookup.npy", "../../data/metadata/ms_param.csv", train_ids)
+dev_set = msms.Dataset("../../data/data", "../../data/metadata/lookup.npy", "../../data/metadata/ms_param.csv", dev_ids)
 
 if __name__ == '__main__':
     torch.multiprocessing.set_start_method('spawn', force=True)

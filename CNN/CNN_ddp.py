@@ -141,7 +141,7 @@ def train(gpu, args):
 
     # Extract info from dataloader and run network
     for epoch in range(args.epochs):
-        
+        epoch_start = time.time()        
         lr = args.lr_0 * (args.lr_r ** epoch)
         optimizer = torch.optim.Adam(net.parameters(),
                                      lr=lr,
@@ -152,6 +152,8 @@ def train(gpu, args):
         running_correct = 0.
         
         for i, (snp, pos, label) in enumerate(train_loader):
+            
+            iter_start = time.time()
 
             # Reshape each chunk of training examples
             snp = snp.view(-1, train_set.num_indivs,
@@ -182,7 +184,11 @@ def train(gpu, args):
                 # reset accumulators
                 running_loss = 0.
                 running_correct = 0.
+            iter_end = time.time()
+            print(f'Iteration time: {iter_start - iter_end}')
 
+        epoch_end = time.time()
+        print(f'Epoch time: {epoch_start - epoch_end}')
     print("Done Training")
         
     # Check testing accuracy

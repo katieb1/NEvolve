@@ -9,9 +9,9 @@
 GPU = 4
 CPU = 1
 EPOCH = 2
-DATA = '~/data/data'
-METADATA = '~/data/metadata/lookup.npy'
-PARAMS = '~/data/metadata/ms_param.csv'
+DATA = '~/scratch/data/data'
+METADATA = '~/scratch/data/metadata/lookup.npy'
+PARAMS = '~/scratch/data/metadata/ms_param.csv'
 TESTPROP = 0.9
 lr_0 = (0.00005, 0.0001, 0.001, 0.01, 0.1, 1.0) 
 lr_r = (0.01 0.05 0.1 0.5 1)

@@ -59,8 +59,9 @@ do
 done
 
 # Set singularity image and activate rapids
+singularity instance.start hp_tune_session
 singularity shell --nv -B /scratch\
-     /scratch/laceyg/genetix/rapids_pytorch.sif
+     /scratch/laceyg/genetix/rapids_pytorch.sif instance://hp_tune_session
 source /opt/conda/etc/profile.d/conda.sh
 conda activate rapids
 
@@ -69,5 +70,8 @@ python CNN_ddp.py -g $GPU -n $CPU -e $EPOCH -d $DATA\
     -m $METADATA -p $PARAMS -t $TESTPROP --lr_0 $lr_0\
     --lr_r $lr_r --l2_lambda $l2_lambda -b $BATCH_SIZE
 
+wait
+
+singularity instance.stop hp_tune_session
 
 
